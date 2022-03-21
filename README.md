@@ -11,9 +11,9 @@
 Singleplayer speed-typing based game. Complete typing based challenges to combat monsters and unlock rewards.
 
 ### App Evaluation
-[Evaluation of your app across the following attributes]
+
 - **Category:** Game
-- **Mobile:** This app would work on a computer but would be a completely different experience due to the change in keyboard. 
+- **Mobile:** This app would work on a computer but would be a completely different experience due to the change of keyboard. 
 - **Story:** The user will "battle" to earn gold to unlock features for their home island. The battle will consist of the user completing typing-related challenges to progress through the endless level, earning more gold the longer they survive.
 - **Market:** Anyone and everyone.
 - **Habit:** While it may be addictive in the short term as they battle new monsters and unlock new features, there will be a point at which they reach an end and there is no current reason to replay.
