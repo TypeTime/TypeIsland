@@ -23,17 +23,26 @@ class BattleViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
-        //hiding the blinking cursor
+        //hiding the blinking cursor and elipses in text label
         textField.tintColor = UIColor.clear
         textLabel.lineBreakMode = .byClipping
         
-        //RANDOM WORD INPUT
+        //may need to be changed depending on gameplay approach
+        randWordCreation()
         
+        //calling textFieldDidChange for each key press
+        textField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+        
+        //below are for features in testing
+        textField.addTarget(self, action: #selector(self.loop), for: .editingChanged)
+        timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.callAttack), userInfo: nil, repeats: true)
+        
+    }
+    
+    func randWordCreation() {
+        var randWords = [String]()   //we will make our own array of words eventually
         //normal difficulty
         if difficulty == 1 {
-            //we will make our own array of words eventually
-            var randWords = [String]()
             var temp = 0
             //normal difficulty gives 20 words? or maybe we will give infinite words and they need to hit a certain score before the time is up.
             while(temp < 20){
@@ -43,23 +52,12 @@ class BattleViewController: UIViewController {
                     temp = temp + 1
                 }
             }
-            //joining array of words into a long string. we would have to continually check and update the string with additional words if we go score based
-            let randStringOfWords = randWords.joined(separator: " ")
-            textLabel.text = randStringOfWords
-            setFirstChar()
         }
-        
-        //calling textFieldDidChange for each key press
-        textField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
-        
-        
-        //below are for features in testing
-        //textField.addTarget(self, action: #selector(self.loop), for: .editingChanged)
-        //timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.callAttack), userInfo: nil, repeats: true)
-        
+        //joining array of words into a long string. we would have to continually check and update the string with additional words if we go score based
+        let randStringOfWords = randWords.joined(separator: " ")
+        textLabel.text = randStringOfWords
+        setFirstChar()
     }
-    
-    
     
     //immediately loading keyboard with view controller
     override func viewDidAppear(_ animated: Bool) {
@@ -119,7 +117,7 @@ class BattleViewController: UIViewController {
     
     //Testing features until end of class - may not be used
     
-    /*
+    
     @objc func loop() {
 
         let possibleChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ💣❄️🧨🌈⭐️🍄"
@@ -181,9 +179,7 @@ class BattleViewController: UIViewController {
     }
     */
 
-}
 
-*/
 }
 //shaking text box on bad input
 extension UIView {
