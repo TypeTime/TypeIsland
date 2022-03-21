@@ -8,7 +8,7 @@
 
 ## Overview
 ### Description
-Singleplayer speed-typing based game. Complete typing-based challenges to combat monsters and unlock rewards.
+Singleplayer speed-typing based game. Complete typing based challenges to combat monsters and unlock rewards.
 
 ### App Evaluation
 [Evaluation of your app across the following attributes]
