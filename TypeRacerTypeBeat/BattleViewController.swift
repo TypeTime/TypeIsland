@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import random_swift
 
 class BattleViewController: UIViewController {
 
