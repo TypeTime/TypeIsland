@@ -1,0 +1,16 @@
+PODS:
+  - random-swift (1.0.1)
+
+DEPENDENCIES:
+  - random-swift
+
+SPEC REPOS:
+  trunk:
+    - random-swift
+
+SPEC CHECKSUMS:
+  random-swift: 7e338af36c478316bdf55b7a24d569f756d785be
+
+PODFILE CHECKSUM: d32142e16b0bd87ef5225679ceaa8c717b5c62bf
+
+COCOAPODS: 1.11.2
