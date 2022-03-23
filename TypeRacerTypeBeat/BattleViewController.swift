@@ -6,14 +6,16 @@
 //
 
 import UIKit
+import random_swift
 
-class BattleViewController: UIViewController {
+class BattleViewController: UIViewController{
 
     var word = String()
     var character = String()
     var difficulty = 1        //0=easy, 1=normal, 2=hard
     var timer: Timer!
     var alive = true
+    let game = GameManager()
     
     
     @IBOutlet weak var textField: UITextField!
@@ -90,8 +92,10 @@ class BattleViewController: UIViewController {
         }
         
         //if user input matches first letter from string of random words
-        if ((input?.hasPrefix(character)) != false) {
+        if ((input?.hasPrefix(character)) == true) {
+            game.add(points: 1)
             
+            print (game.score())
             //removing the user input
             textField.text = String(input!.dropFirst())
             
