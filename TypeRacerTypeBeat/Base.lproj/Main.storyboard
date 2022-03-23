@@ -73,8 +73,8 @@
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="u99-xV-mba">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="550"/>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Random words" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4NB-gh-OG9">
-                                <rect key="frame" x="34" y="511" width="346" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4NB-gh-OG9">
+                                <rect key="frame" x="34" y="532" width="346" height="0.0"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -85,6 +85,13 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="bPi-J1-HC9"/>
                                 </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5MF-RH-ZeT">
+                                <rect key="frame" x="54" y="399" width="96" height="53"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -114,6 +121,7 @@
                     </view>
                     <connections>
                         <outlet property="echoLabel" destination="qJn-GL-2pA" id="3Gb-LM-3Gn"/>
+                        <outlet property="perSecondLabel" destination="5MF-RH-ZeT" id="FQr-cU-JvT"/>
                         <outlet property="textField" destination="wrw-C9-fbs" id="fXk-3w-8Ue"/>
                         <outlet property="textLabel" destination="4NB-gh-OG9" id="GLQ-oR-Tik"/>
                     </connections>
