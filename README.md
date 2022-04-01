@@ -65,8 +65,7 @@ Singleplayer speed-typing based game. Complete typing based challenges to combat
 
 
 ## Wireframes
-[Add picture of your hand sketched wireframes in this section]
-<img src="YOUR_WIREFRAME_IMAGE_URL" width=600>
+<img src="https://user-images.githubusercontent.com/86101798/161202931-18f6d66b-255c-4371-89ed-f617c3255fdd.jpg" width=600>
 
 ### [BONUS] Digital Wireframes & Mockups
 
