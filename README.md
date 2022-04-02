@@ -72,7 +72,7 @@ Singleplayer speed-typing based game. Complete typing based challenges to combat
 ### [BONUS] Interactive Prototype
 
 ## Schema 
-[This section will be completed in Unit 9]
+
 ### Models
 
 <img width="990" alt="image" src="https://user-images.githubusercontent.com/86101798/161360786-6ac0ff33-59ec-482d-a158-c431c1f1c221.png">
