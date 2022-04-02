@@ -43,33 +43,29 @@ Singleplayer speed-typing based game. Complete typing based challenges to combat
 
 ### 2. Screen Archetypes
 
-* [list first screen here]
-   * [list associated required story here]
-   * ...
-* [list second screen here]
-   * [list associated required story here]
-   * ...
+* Home/Hub
+   * Buttons to access the settings and shop, as well as go to battle.
+   * Pop up menus for the settings and shop.
+   * Label indicating the user's total in-game currency.
+* Battle Screen (the actual game)
+   * Allows the user to complete typing-based challenges to progress through the level and earn in-game currency.
+   * Get progressively harder over time.
+   * User has three lives which are lost when they fail a challenge.
 
 ### 3. Navigation
 
 **Tab Navigation** (Tab to Screen)
 
-* [fill out your first tab]
-* [fill out your second tab]
-* [fill out your third tab]
+* N/A
 
 **Flow Navigation** (Screen to Screen)
 
-* [list first screen here]
-   * [list screen navigation here]
-   * ...
-* [list second screen here]
-   * [list screen navigation here]
-   * ...
+* 'Adventure' button -> Battle screen
+* 'Complete Adventure' button -> Home/Hub Screen
+
 
 ## Wireframes
-[Add picture of your hand sketched wireframes in this section]
-<img src="YOUR_WIREFRAME_IMAGE_URL" width=600>
+<img src="https://user-images.githubusercontent.com/86101798/161202931-18f6d66b-255c-4371-89ed-f617c3255fdd.jpg" width=600>
 
 ### [BONUS] Digital Wireframes & Mockups
 
