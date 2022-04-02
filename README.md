@@ -77,7 +77,5 @@ Singleplayer speed-typing based game. Complete typing based challenges to combat
 
 <img width="990" alt="image" src="https://user-images.githubusercontent.com/86101798/161360786-6ac0ff33-59ec-482d-a158-c431c1f1c221.png">
 
-
-	high score	int	highest score reached			reward	int	money received upon death			value	int	cost of the ally
 ### Networking
 - N/A
