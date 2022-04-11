@@ -78,4 +78,10 @@ Singleplayer speed-typing based game. Complete typing based challenges to combat
 <img width="990" alt="image" src="https://user-images.githubusercontent.com/86101798/161360786-6ac0ff33-59ec-482d-a158-c431c1f1c221.png">
 
 ### Networking
-- N/A
+* Home Screen
+  *(Update/PUT) Update user in game currency
+  *(Update/PUT) Update user unlocked rewards
+  *(Update/PUT) Update user settings
+* Battle Screen
+  *(Update/PUT) Update user in game currency
+  *(Update/PUT) Update user statistics
