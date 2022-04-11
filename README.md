@@ -79,9 +79,9 @@ Singleplayer speed-typing based game. Complete typing based challenges to combat
 
 ### Networking
 * Home Screen
-  *(Update/PUT) Update user in game currency
-  *(Update/PUT) Update user unlocked rewards
-  *(Update/PUT) Update user settings
+   *(Update/PUT) Update user in game currency
+   *(Update/PUT) Update user unlocked rewards
+   *(Update/PUT) Update user settings
 * Battle Screen
-  *(Update/PUT) Update user in game currency
-  *(Update/PUT) Update user statistics
+   *(Update/PUT) Update user in game currency
+   *(Update/PUT) Update user statistics
