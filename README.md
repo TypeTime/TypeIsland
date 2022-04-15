@@ -86,3 +86,7 @@ Singleplayer speed-typing based game. Complete typing based challenges to combat
 * Battle Screen (the actual game)
    * (Update/PUT) Update user in game currency
    * (Update/PUT) Update user statistics
+
+##Unit 10 GIF
+
+<img src="https://user-images.githubusercontent.com/86101798/163517284-92a408db-acaa-4797-8fd7-a9c85e06d104.gif" width="250" />
