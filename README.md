@@ -25,21 +25,22 @@ Singleplayer speed-typing based game. Complete typing based challenges to combat
 
 **Required Must-have Stories**
 
-* User views tutorial on first launch
-* User can access settings and stats
-* User can purchase new features for their island from the shop
-* User can battle monsters via challenges for gold
-* By successfully completing a challenge, the user damages the monster. If the user fails, they take damage.
-* Challenges get increasingly harder over time, with monsters rewarding more gold as well.
-* Upon death gold is rewarded and they return to their hub
-* Gold, unlocks, stats, and settings are saved across restarts
+- [ ] User can access settings and stats
+- [ ] User can purchase new features for their island from the shop
+- [ ] User can battle monsters via challenges for gold
+- [ ] By successfully completing a challenge, the user damages the monster. If the user fails, they take damage.
+- [ ] Challenges get increasingly harder over time, with monsters rewarding more gold as well.
+- [ ] Upon death gold is rewarded and they return to their hub
+- [ ] Gold, unlocks, stats, and settings are saved across restarts
+- [x] User faces an infinite list of random words, which will provide the basis of the challenges
+- [x] User sees animated attacks on correct keystrokes
 
 
 **Optional Nice-to-have Stories**
 
-* Certain words may be in a different text color and will act as powerups if typed correctly
-* Multiply damage done if user has a combo going, which will be based on their speed and accuracy
-* animation for attacking
+- [ ] Certain words may be in a different text color and will act as powerups if typed correctly
+- [ ] Multiply damage done if user has a combo going, which will be based on their speed and accuracy
+- [ ] User views tutorial on initial launch
 
 ### 2. Screen Archetypes
 
@@ -78,4 +79,15 @@ Singleplayer speed-typing based game. Complete typing based challenges to combat
 <img width="990" alt="image" src="https://user-images.githubusercontent.com/86101798/161360786-6ac0ff33-59ec-482d-a158-c431c1f1c221.png">
 
 ### Networking
-- N/A
+* Home Screen
+   * (Update/PUT) Update user in game currency
+   * (Update/PUT) Update user unlocked rewards
+   * (Update/PUT) Update user settings
+* Battle Screen (the actual game)
+   * (Update/PUT) Update user in game currency
+   * (Update/PUT) Update user statistics
+
+##Unit 10 GIF
+
+<img src="https://user-images.githubusercontent.com/86101798/163517284-92a408db-acaa-4797-8fd7-a9c85e06d104.gif" width="250" />
+*Multiple features shown are purely for testing purposes
