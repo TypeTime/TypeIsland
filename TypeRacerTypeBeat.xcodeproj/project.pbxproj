@@ -11,7 +11,7 @@
 		2B60B073AB13E4BE40DB6B37 /* Pods_TypeRacerTypeBeatTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA4A10DB50F4C30C30C6CE03 /* Pods_TypeRacerTypeBeatTests.framework */; };
 		9B33734227E5CED400C607CC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B33734127E5CED400C607CC /* AppDelegate.swift */; };
 		9B33734427E5CED400C607CC /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B33734327E5CED400C607CC /* SceneDelegate.swift */; };
-		9B33734627E5CED400C607CC /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B33734527E5CED400C607CC /* HomeViewController.swift */; };
+		9B33734627E5CED400C607CC /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B33734527E5CED400C607CC /* ViewController.swift */; };
 		9B33734927E5CED400C607CC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9B33734727E5CED400C607CC /* Main.storyboard */; };
 		9B33734C27E5CED400C607CC /* TypeRacerTypeBeat.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9B33734A27E5CED400C607CC /* TypeRacerTypeBeat.xcdatamodeld */; };
 		9B33734E27E5CED600C607CC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9B33734D27E5CED600C607CC /* Assets.xcassets */; };
@@ -22,6 +22,7 @@
 		CBD7BE7E2CC13B8EAD064B5F /* Pods_TypeRacerTypeBeat.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC4CAE9822CBD00B701558AC /* Pods_TypeRacerTypeBeat.framework */; };
 		DD5E715427E953E400975A58 /* GameManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD5E715327E953E400975A58 /* GameManager.swift */; };
 		DD5E715627E957DC00975A58 /* ComboSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD5E715527E957DC00975A58 /* ComboSystem.swift */; };
+		DD8AD38E280CE69C0012C54E /* ItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD8AD38D280CE69C0012C54E /* ItemCell.swift */; };
 		DDB7FC0D2801199B000B766B /* Enemy.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB7FC0C2801199B000B766B /* Enemy.swift */; };
 /* End PBXBuildFile section */
 
@@ -50,7 +51,7 @@
 		9B33733E27E5CED400C607CC /* TypeRacerTypeBeat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TypeRacerTypeBeat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9B33734127E5CED400C607CC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9B33734327E5CED400C607CC /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		9B33734527E5CED400C607CC /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		9B33734527E5CED400C607CC /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		9B33734827E5CED400C607CC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		9B33734B27E5CED400C607CC /* TypeRacerTypeBeat.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TypeRacerTypeBeat.xcdatamodel; sourceTree = "<group>"; };
 		9B33734D27E5CED600C607CC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -69,6 +70,7 @@
 		DC4CAE9822CBD00B701558AC /* Pods_TypeRacerTypeBeat.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TypeRacerTypeBeat.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DD5E715327E953E400975A58 /* GameManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameManager.swift; sourceTree = "<group>"; };
 		DD5E715527E957DC00975A58 /* ComboSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComboSystem.swift; sourceTree = "<group>"; };
+		DD8AD38D280CE69C0012C54E /* ItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemCell.swift; sourceTree = "<group>"; };
 		DDB7FC0C2801199B000B766B /* Enemy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enemy.swift; sourceTree = "<group>"; };
 		FE053E13346372C4FFFF13C2 /* Pods-TypeRacerTypeBeatTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TypeRacerTypeBeatTests.debug.xcconfig"; path = "Target Support Files/Pods-TypeRacerTypeBeatTests/Pods-TypeRacerTypeBeatTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -141,9 +143,10 @@
 			children = (
 				9B33734127E5CED400C607CC /* AppDelegate.swift */,
 				9B33734327E5CED400C607CC /* SceneDelegate.swift */,
-				9B33734527E5CED400C607CC /* HomeViewController.swift */,
+				9B33734527E5CED400C607CC /* ViewController.swift */,
 				9B33734727E5CED400C607CC /* Main.storyboard */,
 				DDB7FC0C2801199B000B766B /* Enemy.swift */,
+				DD8AD38D280CE69C0012C54E /* ItemCell.swift */,
 				9B33734D27E5CED600C607CC /* Assets.xcassets */,
 				9B33734F27E5CED600C607CC /* LaunchScreen.storyboard */,
 				9B33735227E5CED600C607CC /* Info.plist */,
@@ -421,8 +424,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9B33734627E5CED400C607CC /* HomeViewController.swift in Sources */,
+				9B33734627E5CED400C607CC /* ViewController.swift in Sources */,
 				9B33734227E5CED400C607CC /* AppDelegate.swift in Sources */,
+				DD8AD38E280CE69C0012C54E /* ItemCell.swift in Sources */,
 				DD5E715427E953E400975A58 /* GameManager.swift in Sources */,
 				9B33734427E5CED400C607CC /* SceneDelegate.swift in Sources */,
 				DDB7FC0D2801199B000B766B /* Enemy.swift in Sources */,
