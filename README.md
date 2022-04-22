@@ -25,10 +25,10 @@ Singleplayer speed-typing based game. Complete typing based challenges to combat
 
 **Required Must-have Stories**
 
-- [ ] User can access settings and stats
+
 - [ ] User can purchase new features for their island from the shop
 - [ ] User can battle monsters via challenges for gold
-- [ ] By successfully completing a challenge, the user damages the monster. If the user fails, they take damage.
+- [x] By successfully completing a challenge, the user damages the monster. If the user fails, they take damage.
 - [ ] Challenges get increasingly harder over time, with monsters rewarding more gold as well.
 - [ ] Upon death gold is rewarded and they return to their hub
 - [ ] Gold, unlocks, stats, and settings are saved across restarts
@@ -41,6 +41,7 @@ Singleplayer speed-typing based game. Complete typing based challenges to combat
 - [ ] Certain words may be in a different text color and will act as powerups if typed correctly
 - [ ] Multiply damage done if user has a combo going, which will be based on their speed and accuracy
 - [ ] User views tutorial on initial launch
+- [ ] User can access settings and stats
 
 ### 2. Screen Archetypes
 
