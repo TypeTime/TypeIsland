@@ -88,12 +88,12 @@ Singleplayer speed-typing based game. Complete typing based challenges to combat
    * (Update/PUT) Update user in game currency
    * (Update/PUT) Update user statistics
 
-##Unit 10 GIF
+## Unit 10 Gif
 
 <img src="https://user-images.githubusercontent.com/86101798/163517284-92a408db-acaa-4797-8fd7-a9c85e06d104.gif" width="250" />
 *Multiple features shown are purely for testing purposes
 
-##Unit 11 GIF
+## Unit 11 Gif
 
 ![ezgif-1-d1dcc81a5d](https://user-images.githubusercontent.com/57662868/164583592-3e52a27f-7320-4bbc-b833-1c6fe711c185.gif)
 
