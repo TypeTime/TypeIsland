@@ -34,7 +34,6 @@ class BattleViewController: UIViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         //hiding the blinking cursor and elipses in main text label
         textField.tintColor = UIColor.clear
         textLabel.lineBreakMode = .byClipping
