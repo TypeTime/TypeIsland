@@ -7,44 +7,63 @@
 
 import UIKit
 
-class BattleViewController: UIViewController{
+class BattleViewController: UIViewController {
 
     //game vars
     var word = String()
     var character = String()
-    var difficulty = 1
+    var lives = 3
+    var gold = 0
+    var difficulty = 1.0
+    var level = 1
     var alive = true
+    var enemyImages = [UIImage]()
     let game = GameManager()
+    let home = ViewController()
     
     //vars for keeping track of WPM/CPS
     var wordInputted = false
     var oldTime = Double(0)
-    var charPerSecond = Int()
+    var charPer = Int()
+    var wordPer = Int()
     var wordTimes = [Double]()
     var wordPerSec = [Double]()
     
-    //enable/disable depending on challenge (one at a time, they use the same label currently)
+    //enable/disable depending on challenge
     var WPM = true
     var CPS = false
+   
     
     @IBOutlet weak var textField: UITextField!
     @IBOutlet weak var textLabel: UILabel!
     @IBOutlet weak var echoLabel: UILabel!
-    @IBOutlet weak var perSecondLabel: UILabel!
+    @IBOutlet weak var CPMLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //hiding the blinking cursor and elipses in main text label
+        
+        initialization()
+        
+        levelStart()
+          
+    }
+    
+    func initialization () {
+        //build list of enemy images
+        enemyList()
+        
+        //hiding the blinking cursor and elipses in text label
         textField.tintColor = UIColor.clear
         textLabel.lineBreakMode = .byClipping
         
+        //loading random words at start
         constantRandomWords(0)
-        
-        //Ensuring infinite random words
-        textField.addTarget(self, action: #selector(constantRandomWords(_:)), for: .editingChanged)
         
         //calling textFieldDidChange for each key press
         textField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+        
+        //Ensuring infinite random words
+        textField.addTarget(self, action: #selector(constantRandomWords(_:)), for: .editingChanged)
         
         //Animations
         textField.addTarget(self, action: #selector(self.loop), for: .editingChanged)
@@ -54,41 +73,127 @@ class BattleViewController: UIViewController{
             charsPerSecond()
             Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.charsPerSecond), userInfo: nil, repeats: true)
         }
-        
         //Enables WPM fields
         if(WPM){
             wordsPerMinute()
             Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.wordsPerMinute), userInfo: nil, repeats: true)
         }
+        
     }
     
-    //Adds the time dif between words to an array
-    func wpmCalc() {
+    func levelStart() {
+        
+        //levelLabel
+        
+        if alive{
+            
+            
+            
+            if (level%5 != 0){
+                
+                randomChallenge()
+                randEnemy()
+                
+                
+            
+                if (difficulty<1.4){        //maybe go by level instead idk
+                    difficulty += 0.1
+                }
+                if (difficulty>=1.4 && difficulty<1.8){
+                    difficulty += 0.08
+                }
+                if (difficulty>=1.8 && difficulty<2.2){
+                    difficulty += 0.6
+                }
+            
+                gold += 100
+                level += 1
+            }
+            else {
+                //randomBossChallenge()
+                //randomBossAnimal()      //maybe an aura or something vs a whole new set of images and challenges
+            }
+        }
+        
+        gameOver()
+        
+    }
+    
+    func randomChallenge() {
+        let challenges = [self.cpsChal,self.wpmChal,self.noErrChal,self.numWordsChal]
+        
+        let x = challenges.randomElement()!
+        
+        //Timer.scheduledTimer(timeInterval: 30, target: self, selector: #selector(), userInfo: nil, repeats: true)
+        
+    }
+    
+    func cpsChal(_ Sender: Any){
+        var time = 0
+        
+        if (charPer < 1){
+            lives -= 1
+            if lives == 0{
+                alive = false
+            }
+        }
+    }
+    
+    @objc func wpmChal(_ Sender:Any) {
+        
+    }
+    
+    @objc func noErrChal(_ Sender:Any) {
+        
+    }
+    
+    @objc func numWordsChal(_ Sender:Any) {
+        
+    }
+    
+    @objc func randomBossChallenge(_ Sender:Any) {
+        
+    }
+    
+    @objc func randEnemy() {
+        //randImage.image = enemyImages.randomElement()
+    }
+    
+    func wpmCalc() { //called every complete word
         _ = Double(0)
         let currentTime = CACurrentMediaTime()
         if oldTime.isZero{
             oldTime = currentTime
             return
         }
-        let dif = currentTime - oldTime
+        
+        var dif = currentTime - oldTime
         
         wordTimes.append(dif)
         oldTime = currentTime
     }
     
-    //called each second - calculates the WPM each second based on averages of average WPS
-    @objc func wordsPerMinute() {
-        var sum = Double(0)
-        var ctr = Double(0)
+    func gameOver(){
+        home.totalGold += gold
+        //game over label
+        //show level reached or score
+        //show buttons to return home
+        
+        
+        
+    }
+    
+    
+    @objc func wordsPerMinute() { //called each second
+        
+        var total = Double(0)
         
         //averaging the words per second
         while(!wordTimes.isEmpty) {
             let tmp = wordTimes.removeFirst()
-            sum += tmp
-            ctr += 1
+            
+            total += 1
         }
-        
-        var total = sum / ctr
         
         //injecting WPS into array
         if (total.isNaN){
@@ -103,7 +208,6 @@ class BattleViewController: UIViewController{
             if wordInputted {
                 wordPerSec.append(total)
             }
-            //if no words were added to the array within the past second, append a 0 as WPS
             else {
                 wordPerSec.append(0)
             }
@@ -121,6 +225,7 @@ class BattleViewController: UIViewController{
                 i += 1
             }
             final *= Double(multi)
+            CPMLabel.text = String(final)
         }
         
         //if full 60 WPS, add them all for WPM
@@ -141,36 +246,43 @@ class BattleViewController: UIViewController{
             final = 999
         }
         
-        perSecondLabel.text = String(final)
+        CPMLabel.text = String(final)
         
         wordInputted = false
+        /*
+            if (self.wordPer < Int(final)){
+                print("real v")
+            }
+            else {
+                print("real ^")
+            }
+         */
     }
     
-    //sets CPS
     @objc func charsPerSecond() {
-        self.perSecondLabel.text = String(self.charPerSecond)
-        self.charPerSecond = 0
+        self.CPMLabel.text = String(self.charPer)
+        self.charPer = 0
     }
     
-    //called on each key press
     @objc func constantRandomWords(_ Sender: Any) {
         var length = Int()
         length = self.textLabel.text!.count
+        var finalRandom = [String]()
         
-        //while >60 chars of random words, add a new random word to end
         while (length < 60){
             let tmp = randomWordCreation()
+            
             textLabel.text!.append(tmp+" ")
             length = length + 1
         }
+
     }
     
-    //returns a random word based on difficulty
     func randomWordCreation() -> String {
         let listOfAllWords = ["asdf"]
+        
         let word = listOfAllWords.randomElement()
-            
-        //following ifs are for when difficulty is implemented
+        /*
         if (difficulty < 2){
             if (word!.count < 6 && word!.count > 1){
                 return(word!)
@@ -186,7 +298,8 @@ class BattleViewController: UIViewController{
                 return(word!)
             }
         }
-        return("failure")
+        */
+        return(word!)
     }
     
     
@@ -210,6 +323,7 @@ class BattleViewController: UIViewController{
     }
 
     
+    
     //called on each key press
     @objc func textFieldDidChange(_ textField: UITextField) {
         
@@ -218,7 +332,7 @@ class BattleViewController: UIViewController{
         
         //Once random words are empty, I'd like the text box to shake from extra input, which it doesn't if it's empty
         if (character.isEmpty) {
-            shake()
+            textField.shake()
         }
         
         //if user input matches first letter from string of random words
@@ -229,20 +343,25 @@ class BattleViewController: UIViewController{
             
             //putting the popped character to echo label
             echoLabel.text = character
-
+            
+            //updating random word string and new first character to check againt
+            
+        
             if (CPS){
-                charPerSecond += 1
+                charPer += 1
             }
+            
             if (WPM){
                 if (textLabel.text?.first == " ") {
                     wordInputted = true
+                    wordPer += 1
                     wpmCalc()
-                }
             }
-            
-            //updating random word string and new first character to check against
+            }
+        
             resetRandomString()
             setFirstChar()
+            
         }
         
         else {
@@ -250,11 +369,15 @@ class BattleViewController: UIViewController{
             textField.text = String(input!.dropFirst())
             
             //shake textbox when wrong
-            shake()
+            textField.shake()
         }
+        
     }
     
-    //Calling attack animation for each key press
+    
+    //Testing features until end of class - may not be used
+    
+    
     @objc func loop() {
 
         let possibleChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ💣❄️🧨🌈⭐️🍄"
@@ -279,13 +402,13 @@ class BattleViewController: UIViewController{
         //timer.invalidate()
      }
      
-    //Attack animation
      func charAttack(_ Sender:UILabel) {
         
         UIView.animate(withDuration: 6, animations: {
         
-            Sender.center = CGPoint(x: (self.view.layer.frame.width)/8, y: (self.view.layer.frame.height)/2)
-            
+        Sender.center = CGPoint(x: (self.view.layer.frame.width)/8, y: (self.view.layer.frame.height)/2)
+
+
         }, completion: {_ in
             
             Sender.removeFromSuperview()
@@ -293,16 +416,15 @@ class BattleViewController: UIViewController{
         })
     }
     
-    //shaking text box on bad input
-    func shake(){
-        let animation = CABasicAnimation(keyPath: "position")
-        animation.duration = 0.08
-        animation.repeatCount = 1
-        animation.autoreverses = true
-        animation.fromValue = NSValue(cgPoint: CGPoint(x: self.textLabel.center.x - 10, y: self.textLabel.center.y))
-        animation.toValue = NSValue(cgPoint: CGPoint(x: self.textLabel.center.x + 10, y: self.textLabel.center.y))
-        textLabel.layer.add(animation, forKey: "position")
+    
+    func enemyList () {
+        enemyImages.append(UIImage(named: "Animal_Cow.png")!)
+        enemyImages.append(UIImage(named: "Animal_Piglet.png")!)
+        enemyImages.append(UIImage(named: "Animal_Duck.png")!)
+        enemyImages.append(UIImage(named: "Animal_Turtle.png")!)
     }
+     
+    
     
     /*
     // MARK: - Navigation
@@ -314,7 +436,20 @@ class BattleViewController: UIViewController{
     }
     */
 
+
 }
 
+//shaking text box on bad input
+extension UIView {
+    func shake(){
+        let animation = CABasicAnimation(keyPath: "position")
+        animation.duration = 0.08
+        animation.repeatCount = 1
+        animation.autoreverses = true
+        animation.fromValue = NSValue(cgPoint: CGPoint(x: self.center.x - 10, y: self.center.y))
+        animation.toValue = NSValue(cgPoint: CGPoint(x: self.center.x + 10, y: self.center.y))
+        self.layer.add(animation, forKey: "position")
+    }
+}
 
 

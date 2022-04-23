@@ -8,6 +8,9 @@
 import UIKit
 
 class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+    
+    public var totalGold = 0
+    
     @IBOutlet weak var TableView: UITableView!
     
     @IBOutlet weak var ShopTitle: UILabel!

@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -50,8 +49,8 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </imageView>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" misplaced="YES" image="rectangle.portrait.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="Ht1-Mg-WgB" userLabel="Shop Background">
-                                <rect key="frame" x="0.0" y="70" width="414" height="827"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" image="rectangle.portrait.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="Ht1-Mg-WgB" userLabel="Shop Background">
+                                <rect key="frame" x="0.0" y="70" width="415" height="827"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </imageView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="xz4-Iw-SD9">
@@ -60,7 +59,7 @@
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="ItemCell" rowHeight="120" id="86C-iZ-81N" customClass="ItemCell" customModule="TypeRacerTypeBeat" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="44.5" width="240" height="120"/>
+                                        <rect key="frame" x="0.0" y="24.5" width="240" height="120"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="86C-iZ-81N" id="jYv-Q3-a6Q">
                                             <rect key="frame" x="0.0" y="0.0" width="240" height="120"/>
@@ -73,9 +72,8 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wCV-2L-Pth">
-                                                    <rect key="frame" x="178" y="44.5" width="62" height="31"/>
+                                                    <rect key="frame" x="194" y="45" width="46" height="30"/>
                                                     <state key="normal" title="Button"/>
-                                                    <buttonConfiguration key="configuration" style="plain" title="$0.00"/>
                                                     <connections>
                                                         <action selector="itemBuy:" destination="86C-iZ-81N" eventType="touchUpInside" id="Itv-5o-JAw"/>
                                                     </connections>
@@ -225,8 +223,8 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="CPMLabel" destination="5MF-RH-ZeT" id="FQq-ah-OIL"/>
                         <outlet property="echoLabel" destination="qJn-GL-2pA" id="3Gb-LM-3Gn"/>
-                        <outlet property="perSecondLabel" destination="5MF-RH-ZeT" id="FQr-cU-JvT"/>
                         <outlet property="textField" destination="wrw-C9-fbs" id="fXk-3w-8Ue"/>
                         <outlet property="textLabel" destination="4NB-gh-OG9" id="GLQ-oR-Tik"/>
                     </connections>
