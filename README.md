@@ -95,5 +95,9 @@ Singleplayer speed-typing based game. Complete typing based challenges to combat
 
 ## Unit 11 Gif
 
-![ezgif-1-d1dcc81a5d](https://user-images.githubusercontent.com/57662868/164583592-3e52a27f-7320-4bbc-b833-1c6fe711c185.gif)
+<img src="https://user-images.githubusercontent.com/57662868/164583592-3e52a27f-7320-4bbc-b833-1c6fe711c185.gif" width="250" />
+
+## Unit 12 Gif
+
+<img src="https://user-images.githubusercontent.com/86101798/165883890-4b20d769-b8c8-4fd3-949e-a5d9d93934b9.gif" width="250" />
 
