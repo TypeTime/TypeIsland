@@ -27,11 +27,11 @@ Singleplayer speed-typing based game. Complete typing based challenges to combat
 
 
 - [ ] User can purchase new features for their island from the shop
-- [ ] User can battle monsters via challenges for gold
+- [x] User can battle monsters via challenges for gold
 - [x] By successfully completing a challenge, the user damages the monster. If the user fails, they take damage.
 - [ ] Challenges get increasingly harder over time, with monsters rewarding more gold as well.
 - [ ] Upon death gold is rewarded and they return to their hub
-- [ ] Gold, unlocks, stats, and settings are saved across restarts
+- [x] Gold, unlocks, stats, and settings are saved across restarts
 - [x] User faces an infinite list of random words, which will provide the basis of the challenges
 - [x] User sees animated attacks on correct keystrokes
 
