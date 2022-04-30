@@ -37,6 +37,10 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ItemCell") as! ItemCell
+        let names = ["Cow", "Duck", "Saimese Cat", "Piglet", "Turtle"]
+        
+        cell.itemImage = ///SET ANIMAL IMAGE ARRAY HERE
+        cell.itemName.text = names[indexPath.row]
         
 /*
  Function(ItemCell)
