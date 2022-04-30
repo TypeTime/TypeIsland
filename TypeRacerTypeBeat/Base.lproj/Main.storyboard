@@ -17,9 +17,13 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ofz-ww-yvg">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ofz-ww-yvg">
                                 <rect key="frame" x="298" y="766" width="96" height="96"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="96" id="Cg3-BU-tep"/>
+                                    <constraint firstAttribute="width" constant="96" id="wIj-Jl-evz"/>
+                                </constraints>
                                 <state key="normal" image="Button_Shop_Extrude(Scaled)">
                                     <color key="titleColor" systemColor="systemRedColor"/>
                                     <color key="titleShadowColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -28,31 +32,32 @@
                                     <segue destination="eyi-vA-nf7" kind="presentation" id="JXQ-jQ-chs"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="f8E-4A-lxN" userLabel="Shop">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="f8E-4A-lxN" userLabel="Shop">
                                 <rect key="frame" x="20" y="766" width="96" height="96"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="68" id="R0Q-8e-VQC"/>
+                                    <constraint firstAttribute="height" constant="96" id="40K-1F-63s"/>
+                                    <constraint firstAttribute="width" constant="96" id="zcA-p9-0WY"/>
                                 </constraints>
                                 <state key="normal" image="Button_Explore_Extrude(Scaled)"/>
                                 <connections>
                                     <action selector="onShopButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Oeg-TQ-jrU"/>
                                 </connections>
                             </button>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" fixedFrame="YES" image="Screen_Loading" translatesAutoresizingMaskIntoConstraints="NO" id="jhD-Qb-XNm">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="Screen_Loading" translatesAutoresizingMaskIntoConstraints="NO" id="jhD-Qb-XNm">
                                 <rect key="frame" x="47" y="184" width="320" height="320"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.84999999999999998" contentMode="scaleToFill" fixedFrame="YES" image="rectangle.portrait.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="m51-zz-cSe" userLabel="Shop Fade">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.84999999999999998" contentMode="scaleToFill" image="rectangle.portrait.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="m51-zz-cSe" userLabel="Shop Fade">
                                 <rect key="frame" x="-100" y="-60" width="645" height="1013"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </imageView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" image="rectangle.portrait.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="Ht1-Mg-WgB" userLabel="Shop Background">
-                                <rect key="frame" x="0.0" y="70" width="415" height="827"/>
+                                <rect key="frame" x="0.0" y="70" width="470" height="827"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </imageView>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="xz4-Iw-SD9">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="xz4-Iw-SD9">
                                 <rect key="frame" x="86" y="153" width="240" height="671"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -103,7 +108,7 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
-                            <button clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="k5l-5v-Dtx" userLabel="Back Button">
+                            <button clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="k5l-5v-Dtx" userLabel="Back Button">
                                 <rect key="frame" x="20" y="44" width="61" height="61"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
@@ -121,20 +126,33 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="Screen_Loading" translatesAutoresizingMaskIntoConstraints="NO" id="l0m-mu-NsR">
+                                <rect key="frame" x="47" y="288" width="320" height="320"/>
+                            </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="l0m-mu-NsR" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="23e-Tw-mQZ"/>
+                            <constraint firstItem="l0m-mu-NsR" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="363-SI-b85"/>
                             <constraint firstAttribute="bottomMargin" secondItem="Ht1-Mg-WgB" secondAttribute="bottom" constant="-35" id="4Cs-eo-abJ"/>
-                            <constraint firstItem="f8E-4A-lxN" firstAttribute="centerX" secondItem="Ofz-ww-yvg" secondAttribute="centerX" id="4vA-tz-Fgp"/>
-                            <constraint firstItem="f8E-4A-lxN" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="139" id="ESJ-HH-qbw"/>
+                            <constraint firstItem="f8E-4A-lxN" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="5pP-Mr-7ME"/>
+                            <constraint firstItem="Ofz-ww-yvg" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="Q1q-32-QJH"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Ofz-ww-yvg" secondAttribute="trailing" constant="20" id="SNA-dv-ynv"/>
                             <constraint firstItem="Ht1-Mg-WgB" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="26" id="XuB-Lk-bfu"/>
-                            <constraint firstItem="f8E-4A-lxN" firstAttribute="top" secondItem="Ofz-ww-yvg" secondAttribute="bottom" constant="24" id="dsi-RH-9Am"/>
-                            <constraint firstItem="f8E-4A-lxN" firstAttribute="centerX" secondItem="Ht1-Mg-WgB" secondAttribute="centerX" id="mCe-3F-zLV"/>
+                            <constraint firstItem="f8E-4A-lxN" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="hKf-Cc-tUn"/>
                             <constraint firstItem="Ht1-Mg-WgB" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="pdP-Ub-83S"/>
-                            <constraint firstItem="f8E-4A-lxN" firstAttribute="centerX" secondItem="WqN-O4-ork" secondAttribute="centerX" id="qDI-ff-72k"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="f8E-4A-lxN" secondAttribute="bottom" constant="14" id="rOf-NI-KiO"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="subviews">
+                                <exclude reference="jhD-Qb-XNm"/>
+                                <exclude reference="m51-zz-cSe"/>
+                                <exclude reference="Ht1-Mg-WgB"/>
+                                <exclude reference="xz4-Iw-SD9"/>
+                                <exclude reference="k5l-5v-Dtx"/>
+                                <exclude reference="WqN-O4-ork"/>
+                            </mask>
+                        </variation>
                     </view>
                     <connections>
                         <outlet property="BackButton" destination="k5l-5v-Dtx" id="kXW-JG-xn2"/>
