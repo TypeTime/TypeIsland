@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		1FCE4F40C96772CB0B97EF40 /* Pods_TypeRacerTypeBeat_TypeRacerTypeBeatUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 86C46C4A199497E877B08F24 /* Pods_TypeRacerTypeBeat_TypeRacerTypeBeatUITests.framework */; };
 		2B60B073AB13E4BE40DB6B37 /* Pods_TypeRacerTypeBeatTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA4A10DB50F4C30C30C6CE03 /* Pods_TypeRacerTypeBeatTests.framework */; };
+		9B2F6F9F2815BA8E007DFD5C /* Data.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9B2F6F9D2815BA8E007DFD5C /* Data.xcdatamodeld */; };
+		9B2F6FA12818F5A8007DFD5C /* GoldManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2F6FA02818F5A8007DFD5C /* GoldManager.swift */; };
 		9B33734227E5CED400C607CC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B33734127E5CED400C607CC /* AppDelegate.swift */; };
 		9B33734427E5CED400C607CC /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B33734327E5CED400C607CC /* SceneDelegate.swift */; };
 		9B33734627E5CED400C607CC /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B33734527E5CED400C607CC /* ViewController.swift */; };
@@ -48,6 +50,8 @@
 		643669659342CA93EFE8CF3D /* Pods-TypeRacerTypeBeat.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TypeRacerTypeBeat.release.xcconfig"; path = "Target Support Files/Pods-TypeRacerTypeBeat/Pods-TypeRacerTypeBeat.release.xcconfig"; sourceTree = "<group>"; };
 		6ACCE07851342E957236006C /* Pods-TypeRacerTypeBeat-TypeRacerTypeBeatUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TypeRacerTypeBeat-TypeRacerTypeBeatUITests.release.xcconfig"; path = "Target Support Files/Pods-TypeRacerTypeBeat-TypeRacerTypeBeatUITests/Pods-TypeRacerTypeBeat-TypeRacerTypeBeatUITests.release.xcconfig"; sourceTree = "<group>"; };
 		86C46C4A199497E877B08F24 /* Pods_TypeRacerTypeBeat_TypeRacerTypeBeatUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TypeRacerTypeBeat_TypeRacerTypeBeatUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9B2F6F9E2815BA8E007DFD5C /* Data.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Data.xcdatamodel; sourceTree = "<group>"; };
+		9B2F6FA02818F5A8007DFD5C /* GoldManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoldManager.swift; sourceTree = "<group>"; };
 		9B33733E27E5CED400C607CC /* TypeRacerTypeBeat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TypeRacerTypeBeat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9B33734127E5CED400C607CC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9B33734327E5CED400C607CC /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -141,9 +145,11 @@
 		9B33734027E5CED400C607CC /* TypeRacerTypeBeat */ = {
 			isa = PBXGroup;
 			children = (
+				9B2F6FA02818F5A8007DFD5C /* GoldManager.swift */,
 				9B33734127E5CED400C607CC /* AppDelegate.swift */,
 				9B33734327E5CED400C607CC /* SceneDelegate.swift */,
 				9B33734527E5CED400C607CC /* ViewController.swift */,
+				9B2F6F9D2815BA8E007DFD5C /* Data.xcdatamodeld */,
 				9B33734727E5CED400C607CC /* Main.storyboard */,
 				DDB7FC0C2801199B000B766B /* Enemy.swift */,
 				DD8AD38D280CE69C0012C54E /* ItemCell.swift */,
@@ -424,6 +430,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9B2F6FA12818F5A8007DFD5C /* GoldManager.swift in Sources */,
 				9B33734627E5CED400C607CC /* ViewController.swift in Sources */,
 				9B33734227E5CED400C607CC /* AppDelegate.swift in Sources */,
 				DD8AD38E280CE69C0012C54E /* ItemCell.swift in Sources */,
@@ -431,6 +438,7 @@
 				9B33734427E5CED400C607CC /* SceneDelegate.swift in Sources */,
 				DDB7FC0D2801199B000B766B /* Enemy.swift in Sources */,
 				9B33734C27E5CED400C607CC /* TypeRacerTypeBeat.xcdatamodeld in Sources */,
+				9B2F6F9F2815BA8E007DFD5C /* Data.xcdatamodeld in Sources */,
 				DD5E715627E957DC00975A58 /* ComboSystem.swift in Sources */,
 				9B33737527E5D0C500C607CC /* BattleViewController.swift in Sources */,
 			);
@@ -773,6 +781,16 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
+		9B2F6F9D2815BA8E007DFD5C /* Data.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				9B2F6F9E2815BA8E007DFD5C /* Data.xcdatamodel */,
+			);
+			currentVersion = 9B2F6F9E2815BA8E007DFD5C /* Data.xcdatamodel */;
+			path = Data.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
 		9B33734A27E5CED400C607CC /* TypeRacerTypeBeat.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (

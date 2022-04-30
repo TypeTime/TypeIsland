@@ -6,11 +6,15 @@
 //
 
 import UIKit
+import CoreData
 
 class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+
+    public var enemyImages = [UIImage(named: "Animal_Cow.png")!,UIImage(named: "Animal_Turtle.png")!,UIImage(named: "Animal_Duck.png")!,UIImage(named: "Animal_Piglet.png")!,UIImage(named: "Animal_Saimese.png")!]
     
-    public var totalGold = 0
+    var totalGold = UserDefaults.standard.integer(forKey: "saveGold")
     
+    @IBOutlet weak var currencyLabel: UILabel!
     @IBOutlet weak var TableView: UITableView!
     
     @IBOutlet weak var ShopTitle: UILabel!
@@ -21,21 +25,26 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     @IBOutlet weak var BackButton: UIButton!
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         TableView.dataSource = self
         TableView.delegate = self
         
+        save()
+        
+        
+        
+        currencyLabel.text = String(totalGold)
+        
         closeShop()
         
         
         
-        
     }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        return enemyImages.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -52,6 +61,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
         return cell
     }
+    
     
     @IBAction func onBackButton(_ sender: Any) {
         closeShop()
@@ -75,6 +85,22 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         ShopFade.isHidden = true
         ShopBackground.isHidden = true
         BackButton.isHidden = true
+    }
+    
+    func save() {
+        let saveGold = 1
+        UserDefaults.standard.set(totalGold, forKey: "saveGold")
+        
+        //Save
+        UserDefaults.standard.set(true, forKey: "Key1") //Bool
+        UserDefaults.standard.set(1, forKey: "Key2")  //Integer
+        UserDefaults.standard.set("This is my string", forKey: "Key3") //String
+        UserDefaults.standard.synchronize()
+                
+        //Retrive
+        UserDefaults.standard.bool(forKey: "Key1")
+        
+        UserDefaults.standard.string(forKey: "Key3")
     }
     
 }

@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import CoreData
 
 class BattleViewController: UIViewController {
 
@@ -13,27 +14,38 @@ class BattleViewController: UIViewController {
     var word = String()
     var character = String()
     var lives = 3
-    var gold = 0
+    public var gold = 0
     var difficulty = 1.0
     var level = 1
     var alive = true
-    var enemyImages = [UIImage]()
     let game = GameManager()
     let home = ViewController()
+    var timer: Timer?
+    var runCount = 0
+    var noErrorChal = false
+    var wordsCompleted = 0
+    var wordsToType = 10
+    var timeRemaining = 10.0
     
     //vars for keeping track of WPM/CPS
     var wordInputted = false
     var oldTime = Double(0)
-    var charPer = Int()
+    @objc var charPer = Int()
     var wordPer = Int()
     var wordTimes = [Double]()
     var wordPerSec = [Double]()
     
     //enable/disable depending on challenge
-    var WPM = true
-    var CPS = false
+    var WPM = false
+    var CPS = true
    
     
+    @IBOutlet weak var challengeLabel: UILabel!
+    @IBOutlet weak var backButton: UIButton!
+    @IBOutlet weak var timerLabel: UILabel!
+    @IBOutlet weak var levelLabel: UILabel!
+    @IBOutlet weak var playerHealthLabel: UILabel!
+    @IBOutlet weak var goldLabel: UILabel!
     @IBOutlet weak var textField: UITextField!
     @IBOutlet weak var textLabel: UILabel!
     @IBOutlet weak var echoLabel: UILabel!
@@ -45,12 +57,17 @@ class BattleViewController: UIViewController {
         initialization()
         
         levelStart()
+        
+        
           
     }
     
     func initialization () {
         //build list of enemy images
         enemyList()
+        
+        //removing predictive bar on keyboard
+        textField.autocorrectionType = .no
         
         //hiding the blinking cursor and elipses in text label
         textField.tintColor = UIColor.clear
@@ -71,7 +88,7 @@ class BattleViewController: UIViewController {
         //Enables CPS fields
         if (CPS){
             charsPerSecond()
-            Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.charsPerSecond), userInfo: nil, repeats: true)
+            
         }
         //Enables WPM fields
         if(WPM){
@@ -79,64 +96,83 @@ class BattleViewController: UIViewController {
             Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.wordsPerMinute), userInfo: nil, repeats: true)
         }
         
+        playerHealthLabel.text = String(lives)
+        goldLabel.text = String(gold)
+        levelLabel.text = String(level)
+        timerLabel.text = String(runCount)
+        
+        
+        print("init completed")
     }
     
     func levelStart() {
-        
-        //levelLabel
-        
-        if alive{
-            
-            
-            
-            if (level%5 != 0){
-                
-                randomChallenge()
-                randEnemy()
-                
-                
-            
-                if (difficulty<1.4){        //maybe go by level instead idk
-                    difficulty += 0.1
-                }
-                if (difficulty>=1.4 && difficulty<1.8){
-                    difficulty += 0.08
-                }
-                if (difficulty>=1.8 && difficulty<2.2){
-                    difficulty += 0.6
-                }
-            
-                gold += 100
-                level += 1
-            }
-            else {
-                //randomBossChallenge()
-                //randomBossAnimal()      //maybe an aura or something vs a whole new set of images and challenges
-            }
-        }
-        
-        gameOver()
-        
+        randEnemy()
+        randomChallenge()
     }
     
     func randomChallenge() {
-        let challenges = [self.cpsChal,self.wpmChal,self.noErrChal,self.numWordsChal]
+        runCount = 0
+        let challenges = [self.noErrorCall]//, self.cpsCall] //,self.wpmChal,self.noErrChal,self.numWordsChal]
         
-        let x = challenges.randomElement()!
-        
-        //Timer.scheduledTimer(timeInterval: 30, target: self, selector: #selector(), userInfo: nil, repeats: true)
+        let chosenChallenge = challenges.randomElement()!
+        chosenChallenge()
+        return
+    }
+    
+    func noErrorCall() {
+        wordsToType = wordsToType + level
+        challengeLabel.text = "Type " + String(wordsToType) + " words without errors!"
+        noErrorChal = true
         
     }
     
-    func cpsChal(_ Sender: Any){
-        var time = 0
+    func challengeTimer () {
+        timer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true, block: {_ in
+            self.timeRemaining -= 0.1
+            self.timerLabel.text = String(format: "%.1f", self.timeRemaining)
+            if self.timeRemaining == 0 {
+                self.timer?.invalidate()
+                self.timeRemaining = 10
+            }
+        })
+    }
+    
+    func loseLife() {
+        lives -= 1
+        playerHealthLabel.text = String(lives)
+        timer?.invalidate()
+        if lives == 0 {
+            gameOver()
+        }
+    }
+    
+    func cpsCall(){
+        challengeLabel.text = "Maintain < " + String(level) + " char per second for " + self.timeRemaining + " seconds!"
+        //calling a check per second
+        timer = Timer.scheduledTimer(timeInterval: TimeInterval(level), target: self, selector: #selector(self.charsPerSecond), userInfo: nil, repeats: true)
+    }
+    
+    @objc func cpsChallenge() {
+        
+        timerLabel.text = String(runCount)
+        if runCount == 10{
+            timer?.invalidate()
+            if lives > 0 {
+                levelPassed()
+            }
+        }
         
         if (charPer < 1){
             lives -= 1
+            playerHealthLabel.text = String(lives)
             if lives == 0{
-                alive = false
+                timer?.invalidate()
+                gameOver()
+                return
             }
         }
+        
+        runCount += 1
     }
     
     @objc func wpmChal(_ Sender:Any) {
@@ -173,12 +209,35 @@ class BattleViewController: UIViewController {
         oldTime = currentTime
     }
     
+    func levelPassed() {
+        level += 1
+    
+        if (difficulty<1.4){        //maybe go by level instead idk
+            difficulty += 0.1
+        }
+        if (difficulty>=1.4 && difficulty<1.8){
+            difficulty += 0.08
+        }
+        if (difficulty>=1.8 && difficulty<2.2){
+            difficulty += 0.6
+        }
+    
+        gold += 100
+        goldLabel.text = String(gold)
+        levelLabel.text = String(level)
+        levelStart()
+        
+    }
+    
     func gameOver(){
         home.totalGold += gold
+        home.save()
+        print(home.totalGold, gold)
+        //home.save()
         //game over label
         //show level reached or score
         //show buttons to return home
-        
+        self.view.endEditing(true)
         
         
     }
@@ -190,7 +249,7 @@ class BattleViewController: UIViewController {
         
         //averaging the words per second
         while(!wordTimes.isEmpty) {
-            let tmp = wordTimes.removeFirst()
+            wordTimes.removeFirst()
             
             total += 1
         }
@@ -260,8 +319,9 @@ class BattleViewController: UIViewController {
     }
     
     @objc func charsPerSecond() {
-        self.CPMLabel.text = String(self.charPer)
-        self.charPer = 0
+        self.CPMLabel.text = String(charPer)
+        cpsChallenge()
+        charPer = 0
     }
     
     @objc func constantRandomWords(_ Sender: Any) {
@@ -330,11 +390,6 @@ class BattleViewController: UIViewController {
         //setting input to key pressed by user
         let input = textField.text
         
-        //Once random words are empty, I'd like the text box to shake from extra input, which it doesn't if it's empty
-        if (character.isEmpty) {
-            textField.shake()
-        }
-        
         //if user input matches first letter from string of random words
         if ((input?.hasPrefix(character)) != false) {
             
@@ -344,35 +399,45 @@ class BattleViewController: UIViewController {
             //putting the popped character to echo label
             echoLabel.text = character
             
-            //updating random word string and new first character to check againt
-            
-        
             if (CPS){
                 charPer += 1
             }
             
-            if (WPM){
-                if (textLabel.text?.first == " ") {
+            if (textLabel.text?.first == " ") {
+                if (WPM) {
                     wordInputted = true
                     wordPer += 1
                     wpmCalc()
+                }
+                if (noErrorChal) {
+                    wordsCompleted += 1
+                    challengeLabel.text = "Type " + String(wordsToType - wordsCompleted) + " words without errors!"
+                }
             }
-            }
-        
             resetRandomString()
             setFirstChar()
-            
         }
-        
         else {
             //removing the user input
             textField.text = String(input!.dropFirst())
             
             //shake textbox when wrong
             textField.shake()
+            
+            if noErrorChal {
+                lives -= 1
+                playerHealthLabel.text = String(lives)
+                if lives == 0 {
+                    timer?.invalidate()
+                    noErrorChal = false
+                    gameOver()
+                    return
+                }
+            }
         }
         
     }
+    
     
     
     //Testing features until end of class - may not be used
@@ -418,10 +483,8 @@ class BattleViewController: UIViewController {
     
     
     func enemyList () {
-        enemyImages.append(UIImage(named: "Animal_Cow.png")!)
-        enemyImages.append(UIImage(named: "Animal_Piglet.png")!)
-        enemyImages.append(UIImage(named: "Animal_Duck.png")!)
-        enemyImages.append(UIImage(named: "Animal_Turtle.png")!)
+        
+        var enemyImages = [UIImage(named: "Animal_Cow.png")!,UIImage(named: "Animal_Turtle.png")!,UIImage(named: "Animal_Duck.png")!,UIImage(named: "Animal_Piglet.png")!]
     }
      
     
@@ -437,6 +500,7 @@ class BattleViewController: UIViewController {
     */
 
 
+    
 }
 
 //shaking text box on bad input
