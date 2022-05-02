@@ -21,6 +21,7 @@
 		9B33735C27E5CED600C607CC /* TypeRacerTypeBeatTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B33735B27E5CED600C607CC /* TypeRacerTypeBeatTests.swift */; };
 		9B33736727E5CED600C607CC /* TypeRacerTypeBeatUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B33736627E5CED600C607CC /* TypeRacerTypeBeatUITests.swift */; };
 		9B33737527E5D0C500C607CC /* BattleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B33737427E5D0C500C607CC /* BattleViewController.swift */; };
+		9B3B580E281FAE220098DA59 /* prstart.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9B3B580C281FAE220098DA59 /* prstart.ttf */; };
 		CBD7BE7E2CC13B8EAD064B5F /* Pods_TypeRacerTypeBeat.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC4CAE9822CBD00B701558AC /* Pods_TypeRacerTypeBeat.framework */; };
 		DD5E715427E953E400975A58 /* GameManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD5E715327E953E400975A58 /* GameManager.swift */; };
 		DD5E715627E957DC00975A58 /* ComboSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD5E715527E957DC00975A58 /* ComboSystem.swift */; };
@@ -68,6 +69,7 @@
 		9B33736627E5CED600C607CC /* TypeRacerTypeBeatUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypeRacerTypeBeatUITests.swift; sourceTree = "<group>"; };
 		9B33736827E5CED600C607CC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9B33737427E5D0C500C607CC /* BattleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BattleViewController.swift; sourceTree = "<group>"; };
+		9B3B580C281FAE220098DA59 /* prstart.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = prstart.ttf; sourceTree = "<group>"; };
 		AFCD81028E642134F4DB0CA1 /* Pods-TypeRacerTypeBeat-TypeRacerTypeBeatUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TypeRacerTypeBeat-TypeRacerTypeBeatUITests.debug.xcconfig"; path = "Target Support Files/Pods-TypeRacerTypeBeat-TypeRacerTypeBeatUITests/Pods-TypeRacerTypeBeat-TypeRacerTypeBeatUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		C1A78C64C2B1B4F053B22061 /* Pods-TypeRacerTypeBeat.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TypeRacerTypeBeat.debug.xcconfig"; path = "Target Support Files/Pods-TypeRacerTypeBeat/Pods-TypeRacerTypeBeat.debug.xcconfig"; sourceTree = "<group>"; };
 		CA4A10DB50F4C30C30C6CE03 /* Pods_TypeRacerTypeBeatTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TypeRacerTypeBeatTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -145,6 +147,7 @@
 		9B33734027E5CED400C607CC /* TypeRacerTypeBeat */ = {
 			isa = PBXGroup;
 			children = (
+				9B3B580A281FAE220098DA59 /* fonts */,
 				9B2F6FA02818F5A8007DFD5C /* GoldManager.swift */,
 				9B33734127E5CED400C607CC /* AppDelegate.swift */,
 				9B33734327E5CED400C607CC /* SceneDelegate.swift */,
@@ -180,6 +183,14 @@
 				9B33736827E5CED600C607CC /* Info.plist */,
 			);
 			path = TypeRacerTypeBeatUITests;
+			sourceTree = "<group>";
+		};
+		9B3B580A281FAE220098DA59 /* fonts */ = {
+			isa = PBXGroup;
+			children = (
+				9B3B580C281FAE220098DA59 /* prstart.ttf */,
+			);
+			path = fonts;
 			sourceTree = "<group>";
 		};
 		C1B9DE6BF6449A4775919621 /* Frameworks */ = {
@@ -303,6 +314,7 @@
 				9B33735127E5CED600C607CC /* LaunchScreen.storyboard in Resources */,
 				9B33734E27E5CED600C607CC /* Assets.xcassets in Resources */,
 				9B33734927E5CED400C607CC /* Main.storyboard in Resources */,
+				9B3B580E281FAE220098DA59 /* prstart.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -13,9 +13,8 @@ class BattleViewController: UIViewController {
     //game vars
     var word = String()
     var character = String()
-    var lives = 3
+    var lives = 4
     public var gold = 0
-    var difficulty = 1.0
     var level = 1
     var alive = true
     let game = GameManager()
@@ -23,9 +22,11 @@ class BattleViewController: UIViewController {
     var timer: Timer?
     var runCount = 0
     var noErrorChal = false
-    var wordsCompleted = 0
+    var cpsChal = false
     var wordsToType = 10
     var timeRemaining = 10.0
+    var challengeStart = false
+    var chosenChallenge = 0
     
     //vars for keeping track of WPM/CPS
     var wordInputted = false
@@ -58,8 +59,6 @@ class BattleViewController: UIViewController {
         
         levelStart()
         
-        
-          
     }
     
     func initialization () {
@@ -82,14 +81,9 @@ class BattleViewController: UIViewController {
         //Ensuring infinite random words
         textField.addTarget(self, action: #selector(constantRandomWords(_:)), for: .editingChanged)
         
-        //Animations
-        textField.addTarget(self, action: #selector(self.loop), for: .editingChanged)
-        
         //Enables CPS fields
-        if (CPS){
-            charsPerSecond()
-            
-        }
+        
+        
         //Enables WPM fields
         if(WPM){
             wordsPerMinute()
@@ -101,7 +95,6 @@ class BattleViewController: UIViewController {
         levelLabel.text = String(level)
         timerLabel.text = String(runCount)
         
-        
         print("init completed")
     }
     
@@ -112,29 +105,69 @@ class BattleViewController: UIViewController {
     
     func randomChallenge() {
         runCount = 0
-        let challenges = [self.noErrorCall]//, self.cpsCall] //,self.wpmChal,self.noErrChal,self.numWordsChal]
+        let challenges = [1, 2] //,self.wpmChal,self.noErrChal,self.numWordsChal]
+        chosenChallenge = challenges.randomElement()!
+        if chosenChallenge == 1 {
+            noErrorCall()
+        }
+        if chosenChallenge == 2 {
+            cpsCall()
+        }
         
-        let chosenChallenge = challenges.randomElement()!
-        chosenChallenge()
         return
     }
     
-    func noErrorCall() {
-        wordsToType = wordsToType + level
-        challengeLabel.text = "Type " + String(wordsToType) + " words without errors!"
-        noErrorChal = true
-        
+    func updateLabel() {
+        challengeLabel.text = "Type " + String(wordsToType) + " words without errors within " + String(format: "%.1f", self.timeRemaining) + " seconds!"
     }
     
-    func challengeTimer () {
-        timer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true, block: {_ in
-            self.timeRemaining -= 0.1
-            self.timerLabel.text = String(format: "%.1f", self.timeRemaining)
-            if self.timeRemaining == 0 {
-                self.timer?.invalidate()
-                self.timeRemaining = 10
+    func noErrorCall() {
+        print("called")
+        wordsToType = 4
+        self.timeRemaining = 10
+        wordsToType = wordsToType + level - 1
+        updateLabel()
+        if challengeStart == false {
+            return
+        }
+        noErrorChal = true
+        timer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true, block: { timer in
+            
+            if self.lives < 1 {
+                timer.invalidate()
+                self.noErrorChal = false
             }
+            self.timeRemaining -= 0.1
+            if self.timeRemaining < 0 {
+                self.timeRemaining = 0.0
+            }
+            if String(format: "%.1f",self.timeRemaining) == "0.0" {
+                self.updateLabel()
+                timer.invalidate()
+                self.noErrorChal = false
+                if self.wordsToType > 0 {
+                    self.loseLife()
+                    if self.lives == 0 {
+                        return
+                    }
+                    self.levelStart()
+                }
+            }
+            
+            self.updateLabel()
+            
         })
+    }
+    
+    func cpsCall(){
+        print("called")
+        timeRemaining = 10
+        challengeLabel.text = "Maintain > " + String(level) + " char per second for " + String(format: "%.1f", self.timeRemaining) + " seconds!"
+        //calling a check per second
+        if challengeStart == false {
+            return
+        }
+        timer = Timer.scheduledTimer(timeInterval: TimeInterval(level), target: self, selector: #selector(self.charsPerSecond), userInfo: nil, repeats: true)
     }
     
     func loseLife() {
@@ -146,14 +179,7 @@ class BattleViewController: UIViewController {
         }
     }
     
-    func cpsCall(){
-        challengeLabel.text = "Maintain < " + String(level) + " char per second for " + self.timeRemaining + " seconds!"
-        //calling a check per second
-        timer = Timer.scheduledTimer(timeInterval: TimeInterval(level), target: self, selector: #selector(self.charsPerSecond), userInfo: nil, repeats: true)
-    }
-    
     @objc func cpsChallenge() {
-        
         timerLabel.text = String(runCount)
         if runCount == 10{
             timer?.invalidate()
@@ -175,21 +201,6 @@ class BattleViewController: UIViewController {
         runCount += 1
     }
     
-    @objc func wpmChal(_ Sender:Any) {
-        
-    }
-    
-    @objc func noErrChal(_ Sender:Any) {
-        
-    }
-    
-    @objc func numWordsChal(_ Sender:Any) {
-        
-    }
-    
-    @objc func randomBossChallenge(_ Sender:Any) {
-        
-    }
     
     @objc func randEnemy() {
         //randImage.image = enemyImages.randomElement()
@@ -210,23 +221,12 @@ class BattleViewController: UIViewController {
     }
     
     func levelPassed() {
+        gold += (100 * level)
         level += 1
-    
-        if (difficulty<1.4){        //maybe go by level instead idk
-            difficulty += 0.1
-        }
-        if (difficulty>=1.4 && difficulty<1.8){
-            difficulty += 0.08
-        }
-        if (difficulty>=1.8 && difficulty<2.2){
-            difficulty += 0.6
-        }
-    
-        gold += 100
         goldLabel.text = String(gold)
         levelLabel.text = String(level)
+        challengeStart = false
         levelStart()
-        
     }
     
     func gameOver(){
@@ -238,8 +238,6 @@ class BattleViewController: UIViewController {
         //show level reached or score
         //show buttons to return home
         self.view.endEditing(true)
-        
-        
     }
     
     
@@ -343,22 +341,24 @@ class BattleViewController: UIViewController {
         
         let word = listOfAllWords.randomElement()
         /*
-        if (difficulty < 2){
+        if (level < 2){
             if (word!.count < 6 && word!.count > 1){
                 return(word!)
             }
         }
-        if (difficulty >= 2 && difficulty < 3) {
+        if (level >= 2 && level < 3) {
             if (word!.count < 8 && word!.count > 2){
                 return(word!)
             }
         }
-        if (difficulty >= 3 && difficulty < 4) {
+        if (level >= 3 && level < 4) {
             if (word!.count < 10 && word!.count > 4){
                 return(word!)
             }
         }
         */
+        
+        setFirstChar()
         return(word!)
     }
     
@@ -386,12 +386,25 @@ class BattleViewController: UIViewController {
     
     //called on each key press
     @objc func textFieldDidChange(_ textField: UITextField) {
+        if challengeStart == false {
+            print("calling")
+            challengeStart = true
+            if chosenChallenge == 1 {
+                print("calling")
+                noErrorCall()
+            }
+            if chosenChallenge == 2 {
+                print("calling")
+                cpsCall()
+            }
+            
+        }
         
         //setting input to key pressed by user
         let input = textField.text
         
         //if user input matches first letter from string of random words
-        if ((input?.hasPrefix(character)) != false) {
+        if (input?.hasPrefix(character) == true) {
             
             //removing the user input
             textField.text = String(input!.dropFirst())
@@ -399,19 +412,34 @@ class BattleViewController: UIViewController {
             //putting the popped character to echo label
             echoLabel.text = character
             
+            let locations = [-25.03:400,-25.02:350,-25.0:300.0,-25.01:250,-24.9:200,-24.99:150, -24.8:100,-24.999:50, -25.1:0]
+               
+            let label = UILabel(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
+            label.center = CGPoint(x: locations.keys.randomElement()!, y: locations.values.randomElement()!)
+            label.textAlignment = .center
+            label.text = character
+
+            self.view.addSubview(label)
+                  
+            charAttack(label)
+            
             if (CPS){
                 charPer += 1
             }
             
-            if (textLabel.text?.first == " ") {
+            if (textLabel.text!.first == " ") {
                 if (WPM) {
                     wordInputted = true
                     wordPer += 1
                     wpmCalc()
                 }
                 if (noErrorChal) {
-                    wordsCompleted += 1
-                    challengeLabel.text = "Type " + String(wordsToType - wordsCompleted) + " words without errors!"
+                    wordsToType -= 1
+                    updateLabel()
+                    if Int(wordsToType) == 0 {
+                        timer?.invalidate()
+                        levelPassed()
+                    }
                 }
             }
             resetRandomString()
@@ -428,7 +456,9 @@ class BattleViewController: UIViewController {
                 lives -= 1
                 playerHealthLabel.text = String(lives)
                 if lives == 0 {
-                    timer?.invalidate()
+                    if timeRemaining < 0 {
+                        timeRemaining = 0
+                    }
                     noErrorChal = false
                     gameOver()
                     return
@@ -452,8 +482,8 @@ class BattleViewController: UIViewController {
         //let chars = ["a":"a","b":"b","c":"c"]
         let right = self.view.frame.width + 25
         let bottom = self.view.frame.height + 25
-        //let locations = [-100.0:0.0,-100.1:-100.1,-0.5:-100.2,100.3:-100.3,200.4:-100.4, 300:-100, 400:-100, 500:-100, 500.1:0,550:50 ]
-        let locations = [-25.03:400,-25.02:350,-25.0:300.0,-25.01:250,-24.9:200,-24.99:150, -24.8:100,-24.999:50, -25.1:0]
+        let locations = [-100.0:0.0,-100.1:-100.1,-0.5:-100.2,100.3:-100.3,200.4:-100.4, 300:-100, 400:-100, 500:-100, 500.1:0,550:50 ]
+        //let locations = [-25.03:400,-25.02:350,-25.0:300.0,-25.01:250,-24.9:200,-24.99:150, -24.8:100,-24.999:50, -25.1:0]
             
         let label = UILabel(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
         label.center = CGPoint(x: locations.keys.randomElement()!, y: locations.values.randomElement()!)
@@ -464,12 +494,11 @@ class BattleViewController: UIViewController {
               
         charAttack(label)
 
-        //timer.invalidate()
      }
      
      func charAttack(_ Sender:UILabel) {
         
-        UIView.animate(withDuration: 6, animations: {
+        UIView.animate(withDuration: 3, animations: {
         
         Sender.center = CGPoint(x: (self.view.layer.frame.width)/8, y: (self.view.layer.frame.height)/2)
 
@@ -483,23 +512,8 @@ class BattleViewController: UIViewController {
     
     
     func enemyList () {
-        
         var enemyImages = [UIImage(named: "Animal_Cow.png")!,UIImage(named: "Animal_Turtle.png")!,UIImage(named: "Animal_Duck.png")!,UIImage(named: "Animal_Piglet.png")!]
     }
-     
-    
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
-
     
 }
 

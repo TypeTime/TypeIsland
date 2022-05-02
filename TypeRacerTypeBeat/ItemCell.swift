@@ -9,13 +9,10 @@ import UIKit
 
 class ItemCell: UITableViewCell {
 
-    
+    @IBOutlet weak var purchaseButton: UIButton!
     @IBOutlet weak var itemImage: UIImageView!
-    
     @IBOutlet weak var itemName: UILabel!
-    
-    @IBAction func itemBuy(_ sender: Any) {
-    }
+    @IBAction func itemBuy(_ sender: Any) {}
     
     override func awakeFromNib() {
         super.awakeFromNib()
