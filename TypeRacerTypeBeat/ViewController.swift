@@ -26,6 +26,13 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     @IBOutlet weak var ShopBackground: UIImageView!
     @IBOutlet weak var BackButton: UIButton!
     
+    //animal unlocks
+    @IBOutlet weak var turtleUnlock: UIImageView!
+    @IBOutlet weak var catUnlock: UIImageView!
+    @IBOutlet weak var duckUnlock: UIImageView!
+    @IBOutlet weak var pigUnlock: UIImageView!
+    @IBOutlet weak var cowUnlock: UIImageView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -39,6 +46,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         currencyLabel.text = String(totalGold)
         
         closeShop()
+        enablePurchases()
 
     }
     
@@ -49,8 +57,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ItemCell") as! ItemCell
-        
-        //let user = self.entity![indexPath.row]
         let shopImages = [UIImage(named: "Animal_Turtle(Scaled).png")!,UIImage(named: "Animal_Saimese(Scaled).png")!,UIImage(named: "Animal_Duck(Scaled).png")!,UIImage(named: "Animal_Piglet(Scaled).png")!,UIImage(named: "Animal_Cow(Scaled).png")!]
         let shopNames = ["Carl","Sandy","Juan","Darnell","Betsy"]
         
@@ -70,29 +76,17 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             cell.purchaseButton.layer.cornerRadius = 10
             cell.purchaseButton.setTitle("owned", for: .normal)
             cell.purchaseButton.isEnabled = false
+            cell.purchaseButton.titleLabel?.font = UIFont(name: "Press Start", size: 14)
         }
         
         cell.purchaseButton.addTarget(self, action: #selector(whichButtonPressed(sender:)), for: .touchUpInside)
-
         
         /*
-        if (user.shopPurchased == true) {
-            cell.itemPurchased = "purchased photo"
-        }
-        else {
-            
-        }
-        */
-/*
- Function(ItemCell)
- itemName -> Name of the item
- itemImage -> Image of the Item
- itemBuy -> This is an IBAction(connected to the button on the cell)
- 
- */
-        //cell.itemName =
-        
-        
+         Function(ItemCell)
+         itemName -> Name of the item
+         itemImage -> Image of the Item
+         itemBuy -> This is an IBAction(connected to the button on the cell)
+         */
         
         return cell
     }
@@ -109,6 +103,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     @IBAction func onBackButton(_ sender: Any) {
         closeShop()
+        enablePurchases()
     }
     
     @IBAction func onShopButton(_ sender: Any) {
@@ -133,6 +128,32 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         BackButton.isHidden = true
         battleButton.isHidden = false
         shopButton.isHidden = false
+    }
+    
+    func enablePurchases() {
+        
+        let defaults = UserDefaults.standard
+        purchasedItems = defaults.array(forKey: "purchasedItems")  as? [Int] ?? [Int]()
+        var i = 1
+        while i < purchasedItems!.count {
+            if purchasedItems![i-1] as! Int == 1 {
+                switch i {
+                case 1:
+                    turtleUnlock.image = UIImage(named: "Animal_Turtle(Scaled)")
+                case 2:
+                    catUnlock.image = UIImage(named: "Animal_Saimese(Scaled)")
+                case 3:
+                    duckUnlock.image = UIImage(named: "Animal_Duck(Scaled)")
+                case 4:
+                    pigUnlock.image = UIImage(named: "Animal_Pig(Scaled)")
+                case 5:
+                    cowUnlock.image = UIImage(named: "Animal_Cow(Scaled)")
+                default:
+                    print("switch error")
+                }
+            }
+            i += 1
+        }
     }
     
     func save() {

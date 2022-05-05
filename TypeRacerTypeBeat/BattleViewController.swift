@@ -13,7 +13,7 @@ class BattleViewController: UIViewController {
     //game vars
     var word = String()
     var character = String()
-    var lives = 4
+    var lives = 3
     public var gold = 0
     var level = 1
     var alive = true
@@ -23,6 +23,7 @@ class BattleViewController: UIViewController {
     var runCount = 0
     var noErrorChal = false
     var cpsChal = false
+    var wordsChal = false
     var wordsToType = 10
     var timeRemaining = 10.0
     var challengeStart = false
@@ -41,6 +42,8 @@ class BattleViewController: UIViewController {
     var CPS = true
    
     
+    @IBOutlet weak var goldEarnedLabel: UILabel!
+    @IBOutlet weak var gameOverLabel: UILabel!
     @IBOutlet weak var challengeLabel: UILabel!
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var timerLabel: UILabel!
@@ -51,6 +54,11 @@ class BattleViewController: UIViewController {
     @IBOutlet weak var textLabel: UILabel!
     @IBOutlet weak var echoLabel: UILabel!
     @IBOutlet weak var CPMLabel: UILabel!
+    @IBOutlet weak var returnHomeButton: UIButton!
+    
+    @IBOutlet weak var heart3: UIImageView!
+    @IBOutlet weak var heart2: UIImageView!
+    @IBOutlet weak var heart1: UIImageView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -81,9 +89,6 @@ class BattleViewController: UIViewController {
         //Ensuring infinite random words
         textField.addTarget(self, action: #selector(constantRandomWords(_:)), for: .editingChanged)
         
-        //Enables CPS fields
-        
-        
         //Enables WPM fields
         if(WPM){
             wordsPerMinute()
@@ -94,11 +99,16 @@ class BattleViewController: UIViewController {
         goldLabel.text = String(gold)
         levelLabel.text = String(level)
         timerLabel.text = String(runCount)
+        returnHomeButton.isHidden = true
+        gameOverLabel.isHidden = true
+        
         
         print("init completed")
     }
     
     func levelStart() {
+        noErrorChal = false
+        cpsChal = false
         randEnemy()
         randomChallenge()
     }
@@ -113,20 +123,70 @@ class BattleViewController: UIViewController {
         if chosenChallenge == 2 {
             cpsCall()
         }
+        if chosenChallenge == 3 {
+            wordsCall()
+        }
         
         return
     }
     
-    func updateLabel() {
+    func updateNoErrLabel() {
         challengeLabel.text = "Type " + String(wordsToType) + " words without errors within " + String(format: "%.1f", self.timeRemaining) + " seconds!"
     }
     
-    func noErrorCall() {
-        print("called")
-        wordsToType = 4
+    func updateCpsLabel() {
+        challengeLabel.text = "Maintain " + String(charPer) + " / " + String(level) + " char per second for " + String(format: "%.1f", self.timeRemaining) + " seconds!"
+    }
+    
+    func updateWordsLabel() {
+        challengeLabel.text = "Type " + String(wordsToType) + " within " + String(format: "%.1f", self.timeRemaining) + " seconds!"
+    }
+    
+    func wordsCall() {
+        print("called wordscall")
+        wordsToType = 5
         self.timeRemaining = 10
         wordsToType = wordsToType + level - 1
-        updateLabel()
+        updateWordsLabel()
+        if challengeStart == false {
+            return
+        }
+        wordsChal = true
+        timer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true, block: { timer in
+            
+            if self.lives < 1 {
+                timer.invalidate()
+                //self.gameOver()
+                //self.noErrorChal = false
+            }
+            self.timeRemaining -= 0.1
+            if self.timeRemaining < 0 {
+                self.timeRemaining = 0.0
+            }
+            if String(format: "%.1f",self.timeRemaining) == "0.0" {
+                self.updateWordsLabel()
+                timer.invalidate()
+                //self.noErrorChal = false
+                if self.wordsToType > 0 {
+                    self.loseLife()
+                    if self.lives < 1 {
+                        self.gameOver()
+                    }
+                    self.levelStart()
+                }
+            }
+            
+            self.updateNoErrLabel()
+            
+        })
+    }
+    
+    func noErrorCall() {
+        print("called actualnoerr")
+        wordsToType = 3
+        self.timeRemaining = 10
+        wordsToType = wordsToType + level - 1
+        updateNoErrLabel()
         if challengeStart == false {
             return
         }
@@ -135,70 +195,89 @@ class BattleViewController: UIViewController {
             
             if self.lives < 1 {
                 timer.invalidate()
-                self.noErrorChal = false
+                //self.gameOver()
+                //self.noErrorChal = false
             }
             self.timeRemaining -= 0.1
             if self.timeRemaining < 0 {
                 self.timeRemaining = 0.0
             }
             if String(format: "%.1f",self.timeRemaining) == "0.0" {
-                self.updateLabel()
+                self.updateNoErrLabel()
                 timer.invalidate()
-                self.noErrorChal = false
+                //self.noErrorChal = false
                 if self.wordsToType > 0 {
                     self.loseLife()
-                    if self.lives == 0 {
-                        return
+                    if self.lives < 1 {
+                        self.gameOver()
                     }
                     self.levelStart()
                 }
             }
             
-            self.updateLabel()
+            self.updateNoErrLabel()
             
         })
     }
     
     func cpsCall(){
-        print("called")
+        print("called actualcps")
         timeRemaining = 10
-        challengeLabel.text = "Maintain > " + String(level) + " char per second for " + String(format: "%.1f", self.timeRemaining) + " seconds!"
+        updateCpsLabel()
         //calling a check per second
         if challengeStart == false {
             return
         }
-        timer = Timer.scheduledTimer(timeInterval: TimeInterval(level), target: self, selector: #selector(self.charsPerSecond), userInfo: nil, repeats: true)
+        cpsChal = true
+        timer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true, block: { [self] timer in
+            
+            
+            self.timeRemaining -= 0.1
+            if self.timeRemaining < 0 {
+                self.timeRemaining = 0.0
+            }
+            
+            if self.lives < 1 {
+                timer.invalidate()
+                return
+            }
+
+            if (String(format: "%.1f", self.timeRemaining.truncatingRemainder(dividingBy: 1))) == "0.0" {
+                if (charPer < level) {
+                    loseLife()
+                    if lives < 1 {
+                        return
+                    }
+                }
+                charPer = 0
+            }
+            
+            if (String(format: "%.1f", self.timeRemaining) == "0.0") {
+                timer.invalidate()
+                levelPassed()
+                return
+            }
+            
+            self.updateCpsLabel()
+            
+        })
     }
     
     func loseLife() {
         lives -= 1
+        if lives == 2 {
+            heart1.isHidden = true
+        }
+        if lives == 1 {
+            heart2.isHidden = true
+        }
+        if lives == 0 {
+            heart3.isHidden = true
+        }
         playerHealthLabel.text = String(lives)
-        timer?.invalidate()
         if lives == 0 {
             gameOver()
         }
-    }
-    
-    @objc func cpsChallenge() {
-        timerLabel.text = String(runCount)
-        if runCount == 10{
-            timer?.invalidate()
-            if lives > 0 {
-                levelPassed()
-            }
-        }
-        
-        if (charPer < 1){
-            lives -= 1
-            playerHealthLabel.text = String(lives)
-            if lives == 0{
-                timer?.invalidate()
-                gameOver()
-                return
-            }
-        }
-        
-        runCount += 1
     }
     
     
@@ -230,6 +309,9 @@ class BattleViewController: UIViewController {
     }
     
     func gameOver(){
+        //heart1.isHidden = true
+        //heart2.isHidden = true
+        //heart3.isHidden = true
         home.totalGold += gold
         home.save()
         print(home.totalGold, gold)
@@ -238,6 +320,10 @@ class BattleViewController: UIViewController {
         //show level reached or score
         //show buttons to return home
         self.view.endEditing(true)
+        returnHomeButton.isHidden = false
+        gameOverLabel.isHidden = false
+        goldEarnedLabel.text = ("+" + String(gold) + " Gold Earned!")
+        
     }
     
     
@@ -316,12 +402,6 @@ class BattleViewController: UIViewController {
          */
     }
     
-    @objc func charsPerSecond() {
-        self.CPMLabel.text = String(charPer)
-        cpsChallenge()
-        charPer = 0
-    }
-    
     @objc func constantRandomWords(_ Sender: Any) {
         var length = Int()
         length = self.textLabel.text!.count
@@ -387,14 +467,13 @@ class BattleViewController: UIViewController {
     //called on each key press
     @objc func textFieldDidChange(_ textField: UITextField) {
         if challengeStart == false {
-            print("calling")
             challengeStart = true
             if chosenChallenge == 1 {
-                print("calling")
+                print("calling 1")
                 noErrorCall()
             }
             if chosenChallenge == 2 {
-                print("calling")
+                print("calling 2")
                 cpsCall()
             }
             
@@ -423,7 +502,7 @@ class BattleViewController: UIViewController {
                   
             charAttack(label)
             
-            if (CPS){
+            if (cpsChal == true){
                 charPer += 1
             }
             
@@ -435,7 +514,7 @@ class BattleViewController: UIViewController {
                 }
                 if (noErrorChal) {
                     wordsToType -= 1
-                    updateLabel()
+                    updateNoErrLabel()
                     if Int(wordsToType) == 0 {
                         timer?.invalidate()
                         levelPassed()
@@ -453,7 +532,7 @@ class BattleViewController: UIViewController {
             textField.shake()
             
             if noErrorChal {
-                lives -= 1
+                loseLife()
                 playerHealthLabel.text = String(lives)
                 if lives == 0 {
                     if timeRemaining < 0 {
