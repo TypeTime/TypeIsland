@@ -42,23 +42,48 @@ class BattleViewController: UIViewController {
     var CPS = true
    
     
+    
+    @IBOutlet weak var labelImage: UIImageView!
+    @IBOutlet weak var enemyImage: UIImageView!
     @IBOutlet weak var goldEarnedLabel: UILabel!
     @IBOutlet weak var gameOverLabel: UILabel!
     @IBOutlet weak var challengeLabel: UILabel!
     @IBOutlet weak var backButton: UIButton!
-    @IBOutlet weak var timerLabel: UILabel!
-    @IBOutlet weak var levelLabel: UILabel!
-    @IBOutlet weak var playerHealthLabel: UILabel!
-    @IBOutlet weak var goldLabel: UILabel!
     @IBOutlet weak var textField: UITextField!
     @IBOutlet weak var textLabel: UILabel!
     @IBOutlet weak var echoLabel: UILabel!
-    @IBOutlet weak var CPMLabel: UILabel!
     @IBOutlet weak var returnHomeButton: UIButton!
+    @IBOutlet weak var returnHomeImage: UIImageView!
     
+    //animal unlocks
+    //game over animals
+    @IBOutlet weak var cowPic: UIImageView!
+    @IBOutlet weak var pigPic: UIImageView!
+    @IBOutlet weak var duckPic: UIImageView!
+    @IBOutlet weak var turtlePic: UIImageView!
+    @IBOutlet weak var catPic: UIImageView!
+    //main screen animals
+    @IBOutlet weak var turtlePic1: UIImageView!
+    @IBOutlet weak var turtlePic2: UIImageView!
+    @IBOutlet weak var duckPic1: UIImageView!
+    @IBOutlet weak var duckPic2: UIImageView!
+    @IBOutlet weak var duckPic3: UIImageView!
+    @IBOutlet weak var cowPic1: UIImageView!
+    @IBOutlet weak var pigPic1: UIImageView!
+    @IBOutlet weak var catPic1: UIImageView!
+    
+    
+    
+    //hearts
     @IBOutlet weak var heart3: UIImageView!
     @IBOutlet weak var heart2: UIImageView!
     @IBOutlet weak var heart1: UIImageView!
+    
+    //hitmarkers
+    
+    @IBOutlet weak var hit3: UIImageView!
+    @IBOutlet weak var hit2: UIImageView!
+    @IBOutlet weak var hit1: UIImageView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -70,12 +95,11 @@ class BattleViewController: UIViewController {
     }
     
     func initialization () {
-        //build list of enemy images
-        enemyList()
         
         //removing predictive bar on keyboard
         textField.autocorrectionType = .no
-        
+
+        textLabel.text?.removeFirst()
         //hiding the blinking cursor and elipses in text label
         textField.tintColor = UIColor.clear
         textLabel.lineBreakMode = .byClipping
@@ -95,43 +119,67 @@ class BattleViewController: UIViewController {
             Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.wordsPerMinute), userInfo: nil, repeats: true)
         }
         
-        playerHealthLabel.text = String(lives)
-        goldLabel.text = String(gold)
-        levelLabel.text = String(level)
-        timerLabel.text = String(runCount)
+        catPic1.image = UIImage(cgImage: (catPic.image?.cgImage!)!, scale: 1.0, orientation: .upMirrored)
+
         returnHomeButton.isHidden = true
+        returnHomeImage.isHidden = true
         gameOverLabel.isHidden = true
+        
+        //game over animals
+        turtlePic.isHidden = true
+        catPic.isHidden = true
+        duckPic.isHidden = true
+        pigPic.isHidden = true
+        cowPic.isHidden = true
+        
+        //unlocks
+        turtlePic1.isHidden = true
+        turtlePic2.isHidden = true
+        duckPic1.isHidden = true
+        duckPic2.isHidden = true
+        duckPic3.isHidden = true
+        cowPic1.isHidden = true
+        catPic1.isHidden = true
+        pigPic1.isHidden = true
         
         
         print("init completed")
     }
     
+    
+    
     func levelStart() {
         noErrorChal = false
         cpsChal = false
+        wordsChal = false
         randEnemy()
         randomChallenge()
     }
     
     func randomChallenge() {
         runCount = 0
-        let challenges = [1, 2] //,self.wpmChal,self.noErrChal,self.numWordsChal]
+        let challenges = [1, 2, 3] //,self.wpmChal,self.noErrChal,self.numWordsChal]
         chosenChallenge = challenges.randomElement()!
+        var tmp = chosenChallenge
+        
         if chosenChallenge == 1 {
             noErrorCall()
+            tmp = 1
         }
         if chosenChallenge == 2 {
             cpsCall()
+            tmp = 2
         }
         if chosenChallenge == 3 {
             wordsCall()
+            tmp = 3
         }
         
         return
     }
     
     func updateNoErrLabel() {
-        challengeLabel.text = "Type " + String(wordsToType) + " words without errors within " + String(format: "%.1f", self.timeRemaining) + " seconds!"
+        challengeLabel.text = "Type " + String(wordsToType) + " words WITHOUT ERRORS within " + String(format: "%.1f", self.timeRemaining) + " seconds!"
     }
     
     func updateCpsLabel() {
@@ -139,11 +187,10 @@ class BattleViewController: UIViewController {
     }
     
     func updateWordsLabel() {
-        challengeLabel.text = "Type " + String(wordsToType) + " within " + String(format: "%.1f", self.timeRemaining) + " seconds!"
+        challengeLabel.text = "Type " + String(wordsToType) + " words within " + String(format: "%.1f", self.timeRemaining) + " seconds!"
     }
     
     func wordsCall() {
-        print("called wordscall")
         wordsToType = 5
         self.timeRemaining = 10
         wordsToType = wordsToType + level - 1
@@ -156,8 +203,6 @@ class BattleViewController: UIViewController {
             
             if self.lives < 1 {
                 timer.invalidate()
-                //self.gameOver()
-                //self.noErrorChal = false
             }
             self.timeRemaining -= 0.1
             if self.timeRemaining < 0 {
@@ -170,19 +215,21 @@ class BattleViewController: UIViewController {
                 if self.wordsToType > 0 {
                     self.loseLife()
                     if self.lives < 1 {
-                        self.gameOver()
+                        //self.gameOver()
+                        return
                     }
+                    self.wordsChal = false
                     self.levelStart()
+                    return
                 }
             }
             
-            self.updateNoErrLabel()
+            self.updateWordsLabel()
             
         })
     }
     
     func noErrorCall() {
-        print("called actualnoerr")
         wordsToType = 3
         self.timeRemaining = 10
         wordsToType = wordsToType + level - 1
@@ -195,8 +242,6 @@ class BattleViewController: UIViewController {
             
             if self.lives < 1 {
                 timer.invalidate()
-                //self.gameOver()
-                //self.noErrorChal = false
             }
             self.timeRemaining -= 0.1
             if self.timeRemaining < 0 {
@@ -209,9 +254,11 @@ class BattleViewController: UIViewController {
                 if self.wordsToType > 0 {
                     self.loseLife()
                     if self.lives < 1 {
-                        self.gameOver()
+                        //self.gameOver()
+                        return
                     }
                     self.levelStart()
+                    return
                 }
             }
             
@@ -221,8 +268,7 @@ class BattleViewController: UIViewController {
     }
     
     func cpsCall(){
-        print("called actualcps")
-        timeRemaining = 10
+        timeRemaining = 6
         updateCpsLabel()
         //calling a check per second
         if challengeStart == false {
@@ -274,7 +320,6 @@ class BattleViewController: UIViewController {
         if lives == 0 {
             heart3.isHidden = true
         }
-        playerHealthLabel.text = String(lives)
         if lives == 0 {
             gameOver()
         }
@@ -282,7 +327,8 @@ class BattleViewController: UIViewController {
     
     
     @objc func randEnemy() {
-        //randImage.image = enemyImages.randomElement()
+        let enemyImages = [UIImage(named: "Animal_Cow(Scaled).png")!,UIImage(named: "Animal_Turtle(Scaled).png")!,UIImage(named: "Animal_Duck(Scaled).png")!,UIImage(named: "Animal_Piglet(Scaled).png")!, UIImage(named: "Animal_Saimese(Scaled).png")!]
+        enemyImage.image = UIImage(cgImage: ((enemyImages.randomElement())?.cgImage!)!, scale: 1.0, orientation: .upMirrored)
     }
     
     func wpmCalc() { //called every complete word
@@ -302,27 +348,36 @@ class BattleViewController: UIViewController {
     func levelPassed() {
         gold += (100 * level)
         level += 1
-        goldLabel.text = String(gold)
-        levelLabel.text = String(level)
         challengeStart = false
         levelStart()
     }
     
     func gameOver(){
-        //heart1.isHidden = true
-        //heart2.isHidden = true
-        //heart3.isHidden = true
         home.totalGold += gold
         home.save()
-        print(home.totalGold, gold)
-        //home.save()
-        //game over label
-        //show level reached or score
-        //show buttons to return home
         self.view.endEditing(true)
         returnHomeButton.isHidden = false
+        returnHomeImage.isHidden = false
         gameOverLabel.isHidden = false
         goldEarnedLabel.text = ("+" + String(gold) + " Gold Earned!")
+        let purchasedItems = UserDefaults.standard.array(forKey: "purchasedItems")
+        if purchasedItems![0] as! Int == 1 {
+            turtlePic.image = UIImage(cgImage: (turtlePic.image?.cgImage!)!, scale: 1.0, orientation: .upMirrored)
+            turtlePic.isHidden = false
+        }
+        if purchasedItems![1] as! Int == 1 {
+            catPic.image = UIImage(cgImage: (catPic.image?.cgImage!)!, scale: 1.0, orientation: .upMirrored)
+            catPic.isHidden = false
+        }
+        if purchasedItems![2] as! Int == 1 {
+            duckPic.isHidden = false
+        }
+        if purchasedItems![3] as! Int == 1 {
+            pigPic.isHidden = false
+        }
+        if purchasedItems![4] as! Int == 1 {
+            cowPic.isHidden = false
+        }
         
     }
     
@@ -368,7 +423,6 @@ class BattleViewController: UIViewController {
                 i += 1
             }
             final *= Double(multi)
-            CPMLabel.text = String(final)
         }
         
         //if full 60 WPS, add them all for WPM
@@ -389,8 +443,6 @@ class BattleViewController: UIViewController {
             final = 999
         }
         
-        CPMLabel.text = String(final)
-        
         wordInputted = false
         /*
             if (self.wordPer < Int(final)){
@@ -403,6 +455,7 @@ class BattleViewController: UIViewController {
     }
     
     @objc func constantRandomWords(_ Sender: Any) {
+        //textLabel.text?.removeFirst()
         var length = Int()
         length = self.textLabel.text!.count
         var finalRandom = [String]()
@@ -417,7 +470,7 @@ class BattleViewController: UIViewController {
     }
     
     func randomWordCreation() -> String {
-        let listOfAllWords = ["asdf"]
+        let listOfAllWords = ["yummy", "would", "move", "you", "mad", "mountain", "cut", "yawn", "style", "reading", "typing", "hospital", "cat", "dog", "bear", "turtle", "forest", "beach", "airplane", "beautiful", "courage", "dumpster", "tasty", "shower", "nice", "dirty", "me", "stinky", "clean", "chicken", "pottery", "waffle", "pancake", "calm", "vibe", "illuminate", "vacuum", "beans", "crib", "swag", "yolo", "strap", "vibrations", "espouse", "macrocosm", "type", "island", "waffles", "saimese", "balinese", "tabby", "dalmatian", "corgi", "husky", "shepherd", "keyboard", "codepath", "university", "ios", "waitlist", "pizza", "pasta", "broccoli", "cabbage", "hummus", "conglomerate", "hegemony", "barbeque", "tortoise", "video", "games", "space", "ship", "crane", "rose", "mitsubishi", "toyota", "honda", "notebook", "system", "font", "label", "attack", "view", "animate", "duration", "point", "ice", "cream", "milk","orange", "apple", "eggs", "juice", "ham", "bat", "monkey", "orangutan", "create", "extension", "size", "requirement", "explore", "collection", "swift", "yuji", "muny", "hot", "meta", "post", "membership", "open", "book", "parameter", "family", "regular", "location", "guilty", "gear", "among", "us", "suspect", "simple", "combo", "mom", "dad", "sister", "brother", "cousin", "beat", "windows", "activate", "setting", "go", "build", "frequent", "visit", "mischievous", "shameless", "female", "male", "placement", "onomatopoeia", "cascade", "brewery", "octopus", "squid", "salmon", "tentacles", "starfish", "sponge", "crab", "plankton", "sand", "mississippi", "massachusetts", "ceaser", "anemone", "database", "whippersnapper", "incubation", "flabbergast", "hullabaloo", "abracadabra", "accoutrements", "aloof", "alfredo", "burrito", "apparatus", "electron", "proton", "neutron", "atom", "molecule", "asparagus", "tomato", "barnacle", "thunder", "lightning", "poison", "ground", "grass", "water", "fire", "dark", "steel", "bug", "psychic", "flying", "configuration", "highlight", "maintain", "content", "scale", "fill", "cow", "pig", "volcano", "water", "hydro", "flask", "phone", "led", "ocean", "forest", "tree","bush","razor","insanity","termite","butterfly","ethereum","mazda","program","blizzard","slushie","beach","snow","mountain","icicle","collect","gold","ruby","python","swift","github","advancement","impact","strong","weak"]
         
         let word = listOfAllWords.randomElement()
         /*
@@ -466,15 +519,18 @@ class BattleViewController: UIViewController {
     
     //called on each key press
     @objc func textFieldDidChange(_ textField: UITextField) {
+        print(textLabel.text)
+        
         if challengeStart == false {
             challengeStart = true
             if chosenChallenge == 1 {
-                print("calling 1")
                 noErrorCall()
             }
             if chosenChallenge == 2 {
-                print("calling 2")
                 cpsCall()
+            }
+            if chosenChallenge == 3 {
+                wordsCall()
             }
             
         }
@@ -494,8 +550,11 @@ class BattleViewController: UIViewController {
             let locations = [-25.03:400,-25.02:350,-25.0:300.0,-25.01:250,-24.9:200,-24.99:150, -24.8:100,-24.999:50, -25.1:0]
                
             let label = UILabel(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
-            label.center = CGPoint(x: locations.keys.randomElement()!, y: locations.values.randomElement()!)
+            //label.center = CGPoint(x: locations.keys.randomElement()!, y: locations.values.randomElement()!)
+            label.center = CGPoint(x: 40, y: 566)
+            label.textColor = .white
             label.textAlignment = .center
+            label.font = UIFont(name: "Press Start", size: 14)
             label.text = character
 
             self.view.addSubview(label)
@@ -511,6 +570,14 @@ class BattleViewController: UIViewController {
                     wordInputted = true
                     wordPer += 1
                     wpmCalc()
+                }
+                if (wordsChal) {
+                    wordsToType -= 1
+                    updateWordsLabel()
+                    if Int(wordsToType) == 0 {
+                        timer?.invalidate()
+                        levelPassed()
+                    }
                 }
                 if (noErrorChal) {
                     wordsToType -= 1
@@ -529,11 +596,10 @@ class BattleViewController: UIViewController {
             textField.text = String(input!.dropFirst())
             
             //shake textbox when wrong
-            textField.shake()
+            labelImage.shake()
             
             if noErrorChal {
                 loseLife()
-                playerHealthLabel.text = String(lives)
                 if lives == 0 {
                     if timeRemaining < 0 {
                         timeRemaining = 0
@@ -548,7 +614,6 @@ class BattleViewController: UIViewController {
     }
     
     
-    
     //Testing features until end of class - may not be used
     
     
@@ -558,7 +623,6 @@ class BattleViewController: UIViewController {
         var char = ""
         char.append(possibleChars.randomElement()!)
 
-        //let chars = ["a":"a","b":"b","c":"c"]
         let right = self.view.frame.width + 25
         let bottom = self.view.frame.height + 25
         let locations = [-100.0:0.0,-100.1:-100.1,-0.5:-100.2,100.3:-100.3,200.4:-100.4, 300:-100, 400:-100, 500:-100, 500.1:0,550:50 ]
@@ -567,7 +631,9 @@ class BattleViewController: UIViewController {
         let label = UILabel(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
         label.center = CGPoint(x: locations.keys.randomElement()!, y: locations.values.randomElement()!)
         label.textAlignment = .center
+        label.font = UIFont(name: "Press Start", size: 14)
         label.text = character
+        
 
         self.view.addSubview(label)
               
@@ -577,21 +643,69 @@ class BattleViewController: UIViewController {
      
      func charAttack(_ Sender:UILabel) {
         
-        UIView.animate(withDuration: 3, animations: {
         
-        Sender.center = CGPoint(x: (self.view.layer.frame.width)/8, y: (self.view.layer.frame.height)/2)
+        
+        UIView.animate(withDuration: 1, animations: {
+        
+            Sender.center = CGPoint(x: (self.view.layer.frame.width)/2, y: (self.view.layer.frame.height)/3)
 
 
         }, completion: {_ in
             
             Sender.removeFromSuperview()
             
+            
+            var i = 0
+            var tmpTimer: Timer?
+            tmpTimer = Timer.init(timeInterval: 0.1, repeats: true) { _ in
+                print("wdfasdfasdf")
+                if i == 0 {
+                    return
+                }
+                if i == 2 {
+                    tmpTimer!.invalidate()
+                }
+                i += 1
+                
+                
+            }
+            
+            UIView .animate(withDuration: 0.5, animations: {
+                let attacks = [UIImage(named: "Hit_X.png")!,UIImage(named: "Hit_Simple")!,UIImage(named: "Hit_Impact.png")!]
+                let rand = [1,2,3]
+                    
+                let tmp = rand.randomElement()
+                if tmp == 1 {
+                    self.hit1.image = attacks.randomElement()
+                    self.hit1.isHidden = false
+                    
+                }
+                if tmp == 2 {
+                    self.hit2.image = attacks.randomElement()
+                    
+                    self.hit2.isHidden = false
+                    
+                }
+                if tmp == 3 {
+                    
+
+                    self.hit3.image = attacks.randomElement()
+                    
+                    self.hit3.isHidden = false
+                    
+                }
+            }, completion: {_ in
+                let seconds = 0.1
+                DispatchQueue.main.asyncAfter(deadline: .now() + seconds) {
+                    self.hit1.isHidden = true
+                    self.hit2.isHidden = true
+                    self.hit3.isHidden = true
+                }
+                })
+            
+        
+            
         })
-    }
-    
-    
-    func enemyList () {
-        var enemyImages = [UIImage(named: "Animal_Cow.png")!,UIImage(named: "Animal_Turtle.png")!,UIImage(named: "Animal_Duck.png")!,UIImage(named: "Animal_Piglet.png")!]
     }
     
 }
