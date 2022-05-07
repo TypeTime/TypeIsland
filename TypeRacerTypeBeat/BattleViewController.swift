@@ -28,6 +28,9 @@ class BattleViewController: UIViewController {
     var timeRemaining = 10.0
     var challengeStart = false
     var chosenChallenge = 0
+    var tmpChallenge = 9
+    var tmpEnemy: UIImage?
+    
     
     //vars for keeping track of WPM/CPS
     var wordInputted = false
@@ -41,8 +44,6 @@ class BattleViewController: UIViewController {
     var WPM = false
     var CPS = true
    
-    
-    
     @IBOutlet weak var labelImage: UIImageView!
     @IBOutlet weak var enemyImage: UIImageView!
     @IBOutlet weak var goldEarnedLabel: UILabel!
@@ -72,18 +73,17 @@ class BattleViewController: UIViewController {
     @IBOutlet weak var pigPic1: UIImageView!
     @IBOutlet weak var catPic1: UIImageView!
     
-    
-    
     //hearts
     @IBOutlet weak var heart3: UIImageView!
     @IBOutlet weak var heart2: UIImageView!
     @IBOutlet weak var heart1: UIImageView!
     
     //hitmarkers
-    
     @IBOutlet weak var hit3: UIImageView!
     @IBOutlet weak var hit2: UIImageView!
     @IBOutlet weak var hit1: UIImageView!
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -99,7 +99,9 @@ class BattleViewController: UIViewController {
         //removing predictive bar on keyboard
         textField.autocorrectionType = .no
 
+        //removing preset text
         textLabel.text?.removeFirst()
+        
         //hiding the blinking cursor and elipses in text label
         textField.tintColor = UIColor.clear
         textLabel.lineBreakMode = .byClipping
@@ -113,7 +115,7 @@ class BattleViewController: UIViewController {
         //Ensuring infinite random words
         textField.addTarget(self, action: #selector(constantRandomWords(_:)), for: .editingChanged)
         
-        //Enables WPM fields
+        //Enables WPM fields - Removed from CodePath final version
         if(WPM){
             wordsPerMinute()
             Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.wordsPerMinute), userInfo: nil, repeats: true)
@@ -156,11 +158,18 @@ class BattleViewController: UIViewController {
         randomChallenge()
     }
     
+    var tmp = 4
+    
     func randomChallenge() {
         runCount = 0
         let challenges = [1, 2, 3] //,self.wpmChal,self.noErrChal,self.numWordsChal]
         chosenChallenge = challenges.randomElement()!
-        var tmp = chosenChallenge
+        
+        while (tmp == chosenChallenge) {
+            chosenChallenge = challenges.randomElement()!
+        }
+        
+        tmp = chosenChallenge
         
         if chosenChallenge == 1 {
             noErrorCall()
@@ -214,6 +223,7 @@ class BattleViewController: UIViewController {
                 //self.noErrorChal = false
                 if self.wordsToType > 0 {
                     self.loseLife()
+                    self.wordsChal = false
                     if self.lives < 1 {
                         //self.gameOver()
                         return
@@ -290,6 +300,7 @@ class BattleViewController: UIViewController {
 
             if (String(format: "%.1f", self.timeRemaining.truncatingRemainder(dividingBy: 1))) == "0.0" {
                 if (charPer < level) {
+                    updateCpsLabel()
                     loseLife()
                     if lives < 1 {
                         return
@@ -328,7 +339,11 @@ class BattleViewController: UIViewController {
     
     @objc func randEnemy() {
         let enemyImages = [UIImage(named: "Animal_Cow(Scaled).png")!,UIImage(named: "Animal_Turtle(Scaled).png")!,UIImage(named: "Animal_Duck(Scaled).png")!,UIImage(named: "Animal_Piglet(Scaled).png")!, UIImage(named: "Animal_Saimese(Scaled).png")!]
-        enemyImage.image = UIImage(cgImage: ((enemyImages.randomElement())?.cgImage!)!, scale: 1.0, orientation: .upMirrored)
+        var chosenEnemy = UIImage(cgImage: ((enemyImages.randomElement())?.cgImage!)!, scale: 1.0, orientation: .upMirrored)
+        while (tmpEnemy == chosenEnemy) {
+            chosenEnemy = UIImage(cgImage: ((enemyImages.randomElement())?.cgImage!)!, scale: 1.0, orientation: .upMirrored)
+        }
+        enemyImage.image = chosenEnemy
     }
     
     func wpmCalc() { //called every complete word
@@ -339,7 +354,7 @@ class BattleViewController: UIViewController {
             return
         }
         
-        var dif = currentTime - oldTime
+        let dif = currentTime - oldTime
         
         wordTimes.append(dif)
         oldTime = currentTime
@@ -458,8 +473,7 @@ class BattleViewController: UIViewController {
         //textLabel.text?.removeFirst()
         var length = Int()
         length = self.textLabel.text!.count
-        var finalRandom = [String]()
-        
+
         while (length < 60){
             let tmp = randomWordCreation()
             
@@ -470,7 +484,7 @@ class BattleViewController: UIViewController {
     }
     
     func randomWordCreation() -> String {
-        let listOfAllWords = ["yummy", "would", "move", "you", "mad", "mountain", "cut", "yawn", "style", "reading", "typing", "hospital", "cat", "dog", "bear", "turtle", "forest", "beach", "airplane", "beautiful", "courage", "dumpster", "tasty", "shower", "nice", "dirty", "me", "stinky", "clean", "chicken", "pottery", "waffle", "pancake", "calm", "vibe", "illuminate", "vacuum", "beans", "crib", "swag", "yolo", "strap", "vibrations", "espouse", "macrocosm", "type", "island", "waffles", "saimese", "balinese", "tabby", "dalmatian", "corgi", "husky", "shepherd", "keyboard", "codepath", "university", "ios", "waitlist", "pizza", "pasta", "broccoli", "cabbage", "hummus", "conglomerate", "hegemony", "barbeque", "tortoise", "video", "games", "space", "ship", "crane", "rose", "mitsubishi", "toyota", "honda", "notebook", "system", "font", "label", "attack", "view", "animate", "duration", "point", "ice", "cream", "milk","orange", "apple", "eggs", "juice", "ham", "bat", "monkey", "orangutan", "create", "extension", "size", "requirement", "explore", "collection", "swift", "yuji", "muny", "hot", "meta", "post", "membership", "open", "book", "parameter", "family", "regular", "location", "guilty", "gear", "among", "us", "suspect", "simple", "combo", "mom", "dad", "sister", "brother", "cousin", "beat", "windows", "activate", "setting", "go", "build", "frequent", "visit", "mischievous", "shameless", "female", "male", "placement", "onomatopoeia", "cascade", "brewery", "octopus", "squid", "salmon", "tentacles", "starfish", "sponge", "crab", "plankton", "sand", "mississippi", "massachusetts", "ceaser", "anemone", "database", "whippersnapper", "incubation", "flabbergast", "hullabaloo", "abracadabra", "accoutrements", "aloof", "alfredo", "burrito", "apparatus", "electron", "proton", "neutron", "atom", "molecule", "asparagus", "tomato", "barnacle", "thunder", "lightning", "poison", "ground", "grass", "water", "fire", "dark", "steel", "bug", "psychic", "flying", "configuration", "highlight", "maintain", "content", "scale", "fill", "cow", "pig", "volcano", "water", "hydro", "flask", "phone", "led", "ocean", "forest", "tree","bush","razor","insanity","termite","butterfly","ethereum","mazda","program","blizzard","slushie","beach","snow","mountain","icicle","collect","gold","ruby","python","swift","github","advancement","impact","strong","weak"]
+        let listOfAllWords = ["yummy", "would", "move", "you", "mad", "mountain", "cut", "yawn", "style", "reading", "typing", "hospital", "cat", "dog", "bear", "turtle", "forest", "beach", "airplane", "beautiful", "courage", "dumpster", "tasty", "shower", "nice", "dirty", "me", "stinky", "clean", "chicken", "pottery", "waffle", "pancake", "calm", "vibe", "illuminate", "vacuum", "beans", "crib", "swag", "yolo", "strap", "vibrations", "espouse", "macrocosm", "type", "island", "waffles", "saimese", "balinese", "tabby", "dalmatian", "corgi", "husky", "shepherd", "keyboard", "codepath", "university", "ios", "waitlist", "pizza", "pasta", "broccoli", "cabbage", "hummus", "conglomerate", "hegemony", "barbeque", "tortoise", "video", "games", "space", "ship", "crane", "rose", "mitsubishi", "toyota", "honda", "notebook", "system", "font", "label", "attack", "view", "animate", "duration", "point", "ice", "cream", "milk","orange", "apple", "eggs", "juice", "ham", "bat", "monkey", "orangutan", "create", "extension", "size", "requirement", "explore", "collection", "swift", "yuji", "muny", "hot", "meta", "post", "membership", "open", "book", "parameter", "family", "regular", "location", "guilty", "gear", "among", "us", "suspect", "simple", "combo", "mom", "dad", "sister", "brother", "cousin", "beat", "windows", "activate", "setting", "go", "build", "frequent", "visit", "mischievous", "shameless", "female", "male", "placement", "onomatopoeia", "cascade", "brewery", "octopus", "squid", "salmon", "tentacles", "starfish", "sponge", "crab", "plankton", "sand", "mississippi", "massachusetts", "ceaser", "anemone", "database", "whippersnapper", "incubation", "flabbergast", "hullabaloo", "abracadabra", "accoutrements", "aloof", "alfredo", "burrito", "apparatus", "electron", "proton", "neutron", "atom", "molecule", "asparagus", "tomato", "barnacle", "thunder", "lightning", "poison", "ground", "grass", "water", "fire", "dark", "steel", "bug", "psychic", "flying", "configuration", "highlight", "maintain", "content", "scale", "fill", "cow", "pig", "volcano", "water", "hydro", "flask", "phone", "led", "ocean", "forest","pink","yellow","blue","green","potato","superposition", "tree","bush","razor","insanity","termite","butterfly","ethereum","mazda","program","blizzard","slushie","beach","snow","mountain","icicle","collect","gold","ruby","python","swift","github","advancement","impact","strong","weak"]
         
         let word = listOfAllWords.randomElement()
         /*
@@ -519,7 +533,7 @@ class BattleViewController: UIViewController {
     
     //called on each key press
     @objc func textFieldDidChange(_ textField: UITextField) {
-        print(textLabel.text)
+        print(textLabel.text!)
         
         if challengeStart == false {
             challengeStart = true
@@ -547,7 +561,7 @@ class BattleViewController: UIViewController {
             //putting the popped character to echo label
             echoLabel.text = character
             
-            let locations = [-25.03:400,-25.02:350,-25.0:300.0,-25.01:250,-24.9:200,-24.99:150, -24.8:100,-24.999:50, -25.1:0]
+            //let locations = [-25.03:400,-25.02:350,-25.0:300.0,-25.01:250,-24.9:200,-24.99:150, -24.8:100,-24.999:50, -25.1:0]
                
             let label = UILabel(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
             //label.center = CGPoint(x: locations.keys.randomElement()!, y: locations.values.randomElement()!)
@@ -623,8 +637,8 @@ class BattleViewController: UIViewController {
         var char = ""
         char.append(possibleChars.randomElement()!)
 
-        let right = self.view.frame.width + 25
-        let bottom = self.view.frame.height + 25
+        //let right = self.view.frame.width + 25
+        //let bottom = self.view.frame.height + 25
         let locations = [-100.0:0.0,-100.1:-100.1,-0.5:-100.2,100.3:-100.3,200.4:-100.4, 300:-100, 400:-100, 500:-100, 500.1:0,550:50 ]
         //let locations = [-25.03:400,-25.02:350,-25.0:300.0,-25.01:250,-24.9:200,-24.99:150, -24.8:100,-24.999:50, -25.1:0]
             
