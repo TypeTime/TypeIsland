@@ -10,13 +10,14 @@ import CoreData
 
 class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
-    public var enemyImages = [UIImage(named: "Animal_Cow.png")!,UIImage(named: "Animal_Turtle.png")!,UIImage(named: "Animal_Duck.png")!,UIImage(named: "Animal_Piglet.png")!,UIImage(named: "Animal_Saimese.png")!]
+    public var enemyImages = [UIImage(named: "Animal_Cow(Scaled).png")!,UIImage(named: "Animal_Turtle(Scaled).png")!,UIImage(named: "Animal_Duck(Scaled).png")!,UIImage(named: "Animal_Piglet(Scaled).png")!,UIImage(named: "Animal_Saimese(Scaled).png")!]
     var entity: [Entity]?
     let itemCostLabels = [" 1k "," 5k "," 10k "," 50k "," 100k "]
     let itemCosts = [1000,5000,10000,50000,100000]
     var totalGold = UserDefaults.standard.integer(forKey: "saveGold")
     var purchasedItems = UserDefaults.standard.array(forKey: "purchasedItems")
     
+    @IBOutlet weak var pigUnlock: UIImageView!
     @IBOutlet weak var battleButton: UIButton!
     @IBOutlet weak var shopButton: UIButton!
     @IBOutlet weak var currencyLabel: UILabel!
@@ -30,8 +31,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     @IBOutlet weak var turtleUnlock: UIImageView!
     @IBOutlet weak var catUnlock: UIImageView!
     @IBOutlet weak var duckUnlock: UIImageView!
-    @IBOutlet weak var pigUnlock: UIImageView!
     @IBOutlet weak var cowUnlock: UIImageView!
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,7 +40,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         TableView.dataSource = self
         TableView.delegate = self
         
-        save()
+        pigUnlock.isHidden = true
         
         self.TableView.layer.cornerRadius = 25
         
@@ -47,6 +48,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
         closeShop()
         enablePurchases()
+        
+        save()
 
     }
     
@@ -78,7 +81,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             cell.purchaseButton.isEnabled = false
             cell.purchaseButton.titleLabel?.font = UIFont(name: "Press Start", size: 14)
         }
-        
+        cell.purchaseButton.tag = indexPath.row
         cell.purchaseButton.addTarget(self, action: #selector(whichButtonPressed(sender:)), for: .touchUpInside)
         
         /*
@@ -113,7 +116,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     func launchShop(){
         TableView.isHidden = false
-        ShopTitle.isHidden = false
         ShopFade.isHidden = false
         ShopBackground.isHidden = false
         BackButton.isHidden = false
@@ -122,7 +124,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     }
     func closeShop(){
         TableView.isHidden = true
-        ShopTitle.isHidden = true
         ShopFade.isHidden = true
         ShopBackground.isHidden = true
         BackButton.isHidden = true
@@ -132,11 +133,13 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     func enablePurchases() {
         
+        
         let defaults = UserDefaults.standard
         purchasedItems = defaults.array(forKey: "purchasedItems")  as? [Int] ?? [Int]()
         var i = 1
-        while i < purchasedItems!.count {
+        while i-1 < purchasedItems!.count {
             if purchasedItems![i-1] as! Int == 1 {
+                print(i)
                 switch i {
                 case 1:
                     turtleUnlock.image = UIImage(named: "Animal_Turtle(Scaled)")
@@ -145,7 +148,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                 case 3:
                     duckUnlock.image = UIImage(named: "Animal_Duck(Scaled)")
                 case 4:
-                    pigUnlock.image = UIImage(named: "Animal_Pig(Scaled)")
+                    pigUnlock.isHidden = false
                 case 5:
                     cowUnlock.image = UIImage(named: "Animal_Cow(Scaled)")
                 default:
@@ -159,7 +162,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     func save() {
         UserDefaults.standard.set(totalGold, forKey: "saveGold")
         UserDefaults.standard.set(purchasedItems, forKey: "purchasedItems")
-        
         UserDefaults.standard.synchronize()
     }
     

@@ -25,19 +25,18 @@ Singleplayer speed-typing based game. Complete typing based challenges to combat
 
 **Required Must-have Stories**
 
-
-- [ ] User can purchase new features for their island from the shop
 - [x] User can battle monsters via challenges for gold
 - [x] By successfully completing a challenge, the user damages the monster. If the user fails, they take damage.
-- [ ] Challenges get increasingly harder over time, with monsters rewarding more gold as well.
-- [ ] Upon death gold is rewarded and they return to their hub
-- [x] Gold, unlocks, stats, and settings are saved across restarts
+- [X] Challenges get increasingly harder over time, with monsters rewarding more gold as well.
+- [X] Upon death gold is rewarded and they return to their hub
+- [x] Gold and unlocks are saved across restarts
 - [x] User faces an infinite list of random words, which will provide the basis of the challenges
 - [x] User sees animated attacks on correct keystrokes
 
 
 **Optional Nice-to-have Stories**
 
+- [ ] User can purchase new features for their island from the shop
 - [ ] Certain words may be in a different text color and will act as powerups if typed correctly
 - [ ] Multiply damage done if user has a combo going, which will be based on their speed and accuracy
 - [ ] User views tutorial on initial launch
@@ -101,3 +100,6 @@ Singleplayer speed-typing based game. Complete typing based challenges to combat
 
 <img src="https://user-images.githubusercontent.com/86101798/165883890-4b20d769-b8c8-4fd3-949e-a5d9d93934b9.gif" width="250" />
 
+## Unit 13 Gif
+
+<img src="https://user-images.githubusercontent.com/86101798/167067683-2525c500-8f0b-4ac0-9569-4d350c000bbc.gif" width="250" />
